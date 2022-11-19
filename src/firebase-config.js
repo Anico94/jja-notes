@@ -122,4 +122,5 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
+  sendPasswordResetEmail,
 };
