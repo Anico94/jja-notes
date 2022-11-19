@@ -1,6 +1,8 @@
 import { auth, logOut } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import SearchAppBar from "./AppBarTest";
+import MainMenu from "./MainMenu";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ const Profile = () => {
 
   const currentUserInfo = (user) => {
     if (!user) {
+      navigate("/login");
       return <p>Loading.......</p>;
     }
     return (
@@ -32,6 +35,16 @@ const Profile = () => {
     );
   };
 
-  return <div>{currentUserInfo(user)}</div>;
+  return (
+    <div className="home-page">
+      <SearchAppBar className="search-app-bar" />
+      <div className="main-app">
+        <div className="main-menu">
+          <MainMenu />
+        </div>
+        <div className="main-app">{currentUserInfo(user)}</div>
+      </div>
+    </div>
+  );
 };
 export default Profile;

@@ -39,5 +39,17 @@
 
 * {
   box-sizing: border-box;
-  border: 1px solid black;
+}
+
+.no-deco {
+  text-decoration: none;
+  color: #333;
+}
+
+.notes-container {
+  padding: 20px;
+}
+
+.temp-box {
+  margin: 20px 0;
 }
