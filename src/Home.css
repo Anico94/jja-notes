@@ -1,0 +1,12 @@
+.home-page {
+    min-height: 100vh;
+    display: flex;
+}
+
+.main-menu {
+    width: 300px;
+}
+
+.main-app {
+    width: 100%;
+}
