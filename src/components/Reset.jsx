@@ -8,7 +8,6 @@ const Reset = () => {
   const [email, setEmail] = useState("");
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (loading) return;
     if (user) navigate("/dashboard");
