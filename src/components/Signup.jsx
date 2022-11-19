@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "../firebase-config";
 
 const Signup = () => {
@@ -7,6 +7,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [error, seterror] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== passwordConfirmation) {
@@ -15,7 +16,8 @@ const Signup = () => {
       setEmail("");
       setPassword("");
       setPasswordConfirmation("");
-      const res = await signUp(email, password);
+      const [res, uid] = await signUp(email, password);
+      if (res) navigate(`/profile/${uid}`);
       if (res.error) seterror(res.error);
     }
   };

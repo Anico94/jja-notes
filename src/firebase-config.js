@@ -33,7 +33,7 @@ import {
 
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_API_KEY}`,
-  authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
+  authDomain: "jja-notes.firebaseapp.com",
   projectId: "jja-notes",
   storageBucket: "jja-notes.appspot.com",
   messagingSenderId: "421644779194",
@@ -67,7 +67,7 @@ const signUp = async (email, password) => {
       email: user.email,
     });
     console.log("Sign up successful");
-    return true;
+    return [true, user.uid];
   } catch (error) {
     alert("Sign up FAILED:", error.message);
     return { error: error.message };
@@ -100,7 +100,7 @@ const logOut = async () => {
     console.log("Signed out");
     return true;
   } catch (error) {
-    console.log("Signing out failed successfully");
+    console.log("Sign out failed successfully");
     return false;
   }
 };
