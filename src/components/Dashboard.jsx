@@ -21,10 +21,24 @@ const Dashboard = () => {
     }
   };
 
+  const fetchNotebooks = async () => {
+    try {
+      const q = query(collection(db, `users`));
+      const doc = await getDocs(q);
+      const data = doc.docs;
+      console.log(data);
+      setName(data.name);
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
+    }
+  };
+
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
     fetchUserName();
+    fetchNotebooks();
   }, [user, loading]);
 
   return (
@@ -33,6 +47,7 @@ const Dashboard = () => {
         Logged in as
         <div>{name}</div>
         <div>{user?.email}</div>
+        <div></div>
         <button className="dashboard__btn" onClick={logout}>
           Logout
         </button>
