@@ -2,7 +2,7 @@ import { auth, logOut } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SearchAppBar from "./AppBarTest";
-import MainMenu from "./MainMenu";
+import MainMenu from "./Notebooks";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -11,14 +11,15 @@ const Profile = () => {
 
   const handleLogout = async () => {
     const res = await logOut();
+    console.log(res);
     if (res) {
-      navigate("/login");
+      navigate("/");
     }
   };
 
   const currentUserInfo = (user) => {
     if (!user) {
-      navigate("/login");
+      navigate("/");
       return <p>Loading.......</p>;
     }
     return (
@@ -29,8 +30,7 @@ const Profile = () => {
           Email: {user.email} ({user.emailVerified ? "verified" : "unverified"})
         </p>
         <p>Last Logged In: {Date(Date.parse(user.metadata.lastSignInTime))}</p>
-        <h3>Edit user info coming soon</h3>
-        <button onClick={handleLogout}>Logout</button>
+        <h3>TODO: add popup that allows 1. edit display name 2. avatar</h3>
       </div>
     );
   };

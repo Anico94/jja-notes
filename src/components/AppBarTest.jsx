@@ -96,7 +96,7 @@ export default function SearchAppBar() {
     handleCloseUserMenu();
     const res = await logOut();
     if (res) {
-      navigate("/login");
+      navigate("/");
     }
   };
 

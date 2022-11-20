@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../MainMenu.css";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
@@ -14,13 +14,37 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
 import BookIcon from "@mui/icons-material/Book";
 import DescriptionIcon from "@mui/icons-material/Description";
+import { auth, db } from "../firebase-config";
+import { query, collection, getDocs, where } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
-const MainMenu = () => {
+const Notebooks = (props) => {
   const [open, setOpen] = React.useState(true);
+  const [user] = useAuthState(auth);
 
   const handleClick = () => {
-    setOpen(!open);
+    props.onClick();
   };
+  // const q = collection(db, `users`);
+  // const [docs, loading, error] = useCollectionData(q);
+  // docs.map((doc) => {
+  //   console.log(doc.documentId);
+  // });
+
+  const fetchNotebooks = async () => {
+    try {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const doc = await getDocs(q);
+      const data = doc.docs.data();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotebooks();
+  }, [user]);
 
   return (
     <List
@@ -33,26 +57,30 @@ const MainMenu = () => {
         </ListSubheader>
       }
     >
-      <ListItemButton>
+      {/* TODO: move icons to a higher level */}
+      <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <BookIcon />
         </ListItemIcon>
         <ListItemText primary="Note Book 1" />
       </ListItemButton>
+
       <ListItemButton>
         <ListItemIcon>
           <BookIcon />
         </ListItemIcon>
         <ListItemText primary="Note Book 2" />
       </ListItemButton>
+
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <BookIcon />
         </ListItemIcon>
         <ListItemText primary="Note Book 3" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        {/* {open ? <ExpandLess /> : <ExpandMore />} */}
       </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+
+      {/* <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}>
             <ListItemIcon>
@@ -61,9 +89,9 @@ const MainMenu = () => {
             <ListItemText primary="Page 1" />
           </ListItemButton>
         </List>
-      </Collapse>
+      </Collapse> */}
     </List>
   );
 };
 
-export default MainMenu;
+export default Notebooks;

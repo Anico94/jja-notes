@@ -17,7 +17,7 @@ const Login = () => {
       //   setLoadingMessage("Loading.......");
       return;
     }
-    if (user) navigate(`/profile/${user.uid}`);
+    if (user) navigate(`/home/${user.uid}`);
     console.log(user, loading, error);
   }, [user, loading]);
 

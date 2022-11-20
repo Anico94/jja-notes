@@ -37,9 +37,9 @@ function App() {
 
       <div>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/home/:uid" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/profile/:uid" element={<Profile />} />
           <Route path="/reset" element={<Reset />} />
         </Routes>
