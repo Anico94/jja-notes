@@ -14,6 +14,10 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
 import BookIcon from "@mui/icons-material/Book";
 import DescriptionIcon from "@mui/icons-material/Description";
+import { dividerClasses, IconButton } from "@mui/material";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import Button from "@mui/material/Button";
 
 const Pages = () => {
   const [open, setOpen] = React.useState(true);
@@ -29,16 +33,21 @@ const Pages = () => {
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          Pages
+          <div className="menu-actions">
+            <ListItemIcon>
+              <DescriptionIcon />
+            </ListItemIcon>
+            Pages
+            <Button variant="contained" endIcon={<LibraryAddIcon />}>
+              Add
+            </Button>
+          </div>
         </ListSubheader>
       }
     >
       {/* TODO: move icons to a higher level */}
 
       <ListItemButton>
-        <ListItemIcon>
-          <DescriptionIcon />
-        </ListItemIcon>
         <ListItemText primary="Page 1" />
       </ListItemButton>
     </List>

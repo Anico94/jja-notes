@@ -65,6 +65,7 @@ const signUp = async (email, password) => {
       name: "",
       authProvider: "local",
       email: user.email,
+      // documentID: user.documentID,
     });
     console.log("Sign up successful");
     return [true, user.uid];

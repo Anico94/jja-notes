@@ -15,9 +15,13 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import BookIcon from "@mui/icons-material/Book";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { auth, db } from "../firebase-config";
-import { query, collection, getDocs, where } from "firebase/firestore";
+import { query, collection, getDocs, where, getDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { IconButton } from "@mui/material";
+import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import Button from "@mui/material/Button";
 
 const Notebooks = (props) => {
   const [open, setOpen] = React.useState(true);
@@ -32,19 +36,25 @@ const Notebooks = (props) => {
   //   console.log(doc.documentId);
   // });
 
-  const fetchNotebooks = async () => {
-    try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs.data();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const fetchNotebooks = async () => {
+  //   try {
+  //     // const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+  //     // const doc = await getDocs(q);
+  //     // const data = doc.docs.data();
+  //     const usersRef = collection(db, "users");
+  //     const usersSnap = await getDoc(usersRef);
+  //     const [docs, loading, error] = useCollectionData(q);
+  //     // const userDocument = q.document();
+  //     // const documentID = userDocument.documentID;
+  //     console.log(docs.snapshotChanges());
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchNotebooks();
-  }, [user]);
+  // useEffect(() => {
+  //   fetchNotebooks();
+  // }, [user]);
 
   return (
     <List
@@ -53,29 +63,28 @@ const Notebooks = (props) => {
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          Note Books
+          <div className="menu-actions">
+            <ListItemIcon>
+              <BookIcon />
+            </ListItemIcon>
+            Notebooks
+            <Button variant="contained" endIcon={<LibraryAddIcon />}>
+              Add
+            </Button>
+          </div>
         </ListSubheader>
       }
     >
       {/* TODO: move icons to a higher level */}
       <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <BookIcon />
-        </ListItemIcon>
-        <ListItemText primary="Note Book 1" />
+        <ListItemText primary="Notebook 1" />
       </ListItemButton>
 
       <ListItemButton>
-        <ListItemIcon>
-          <BookIcon />
-        </ListItemIcon>
         <ListItemText primary="Note Book 2" />
       </ListItemButton>
 
       <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <BookIcon />
-        </ListItemIcon>
         <ListItemText primary="Note Book 3" />
         {/* {open ? <ExpandLess /> : <ExpandMore />} */}
       </ListItemButton>

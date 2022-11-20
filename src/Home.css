@@ -14,3 +14,9 @@
 .main-app {
   width: 100%;
 }
+
+.menu-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
