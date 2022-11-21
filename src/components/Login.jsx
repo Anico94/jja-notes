@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { auth, signIn, signInWithGoogle } from "../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import logo from "../assets/1.png";
+import thumbnail from "../assets/2.png";
 import "../Login.css";
 
 const Login = () => {
@@ -34,31 +36,41 @@ const Login = () => {
 
   return (
     <div className="login">
-      <div className="login__container">
+      <div className="login__container left">
+        <img src={logo} alt="App Logo" className="logo" />
+        <h3>This can be the logo of the login page</h3>
+      </div>
+      <div className="login__container right">
+        <img src={thumbnail} alt="App Thumbnail" className="thumbnail" />
         <h2>Log In</h2>
         {/* {error ? <div>{error}</div> : null} */}
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="email"
-            className="login__textBox"
-            value={email}
-            placeholder="Enter e-mail"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            name="password"
-            className="login__textBox"
-            value={password}
-            placeholder="Your Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <input type="submit" value="Log In" className="login__btn" />
-        </form>
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
-          Login with Google
-        </button>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="email"
+              className="login__textBox"
+              value={email}
+              placeholder="Enter e-mail"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              name="password"
+              className="login__textBox"
+              value={password}
+              placeholder="Your Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <input type="submit" value="Log In" className="login__btn" />
+          </form>
+          <button
+            className="login__btn login__google"
+            onClick={signInWithGoogle}
+          >
+            Login with Google
+          </button>
+        </div>
         <Link to="/reset">Forgot Password</Link>
         <div>
           Don&apos;t have an account? <Link to="/signup">Sign up</Link> now.
