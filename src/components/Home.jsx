@@ -15,8 +15,18 @@ const Home = () => {
     setOpen(!open);
   };
 
+  const notebookOnClickWrapper = (notebookRef) => {
+    showPages();
+    fetchNotebookRef(notebookRef);
+  };
+
   const showPages = () => {
     setOpenPages(!openPages);
+  };
+
+  const fetchNotebookRef = (notebookRef) => {
+    console.log(notebookRef);
+    setNotebookSelected(notebookRef);
   };
 
   return (
@@ -24,7 +34,7 @@ const Home = () => {
       <SearchAppBar className="search-app-bar" />
       <div className="main-app">
         <div className="main-menu">
-          <Notebooks onClick={showPages} />
+          <Notebooks onClick={notebookOnClickWrapper} />
         </div>
         <div className="main-menu" hidden={!openPages}>
           <Pages />

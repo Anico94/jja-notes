@@ -11,7 +11,7 @@ const Page = () => {
 
   console.log(process.env.REACT_APP_TINY_API_KEY);
   return (
-    <>
+    <div className="editor-container">
       <Editor
         apiKey={process.env.REACT_APP_TINY_API_KEY}
         onInit={(evt, editor) => (editorRef.current = editor)}
@@ -37,7 +37,7 @@ const Page = () => {
         }}
       />
       <button onClick={log}>Log editor content</button>
-    </>
+    </div>
   );
 };
 

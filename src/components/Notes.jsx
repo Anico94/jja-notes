@@ -5,7 +5,7 @@ import Page from "./Page";
 
 const Notes = () => {
   return (
-    <div>
+    <div className="page-container">
       <Page />
     </div>
   );
