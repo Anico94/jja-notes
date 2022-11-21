@@ -26,49 +26,39 @@ import Button from "@mui/material/Button";
 const Notebooks = (props) => {
   const [open, setOpen] = React.useState(true);
   const [user] = useAuthState(auth);
+  const [notebookRefs, setNotebookRefs] = useState([]);
+  const [docs, setDocs] = useState([]);
+  // const [notebooks, setNotebooks] = useState([]);
+  const [q, setQ] = useState("");
 
   const handleClick = () => {
     props.onClick();
   };
-  // const q = collection(db, `users`);
-  // const [docs, loading, error] = useCollectionData(q);
-  // docs.map((doc) => {
-  //   console.log(doc.documentId);
-  // });
-
-  // const fetchNotebooks = async () => {
-  //   try {
-  // const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-  // const doc = await getDocs(q);
-  // const data = doc.docs.data();
-
-  // const userDocument = q.document();
-  // const documentID = userDocument.documentID;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchNotebooks();
-  // }, [user]);
-
-  const [notebookRefs, setNotebookRefs] = useState([]);
 
   const fetchNotebooks = async () => {
     try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const [docs, loading, error] = useCollectionData(q);
-      // const doc = getDocs(q);
-      setNotebookRefs(docs[0].notebookref);
-      console.log(docs[0].notebookref);
+      const notebookQuery = query(
+        collection(db, "notebooks"),
+        where("users", "array-contains", user?.uid)
+      );
+      setQ(notebookQuery);
+      const doc = await getDocs(notebookQuery);
+      setDocs(doc.docs);
     } catch (err) {
-      console.log(err);
+      console.log("still working");
     }
   };
   useEffect(() => {
     fetchNotebooks();
   }, [user]);
+
+  // useEffect(() => {
+  let notebooks = [];
+  if (docs) {
+    const [docs, loading, error] = useCollectionData(q);
+    notebooks = docs;
+  }
+  // }, []);
 
   return (
     <List
@@ -89,15 +79,15 @@ const Notebooks = (props) => {
         </ListSubheader>
       }
     >
-      {notebookRefs.length > 0
-        ? notebookRefs.map((ref) => {
+      {notebooks?.length > 0
+        ? notebooks.map((notebook) => {
             return (
-              <ListItemButton key={ref} onClick={handleClick}>
-                <ListItemText primary={ref} />
+              <ListItemButton key={notebook.ref} onClick={handleClick}>
+                <ListItemText primary={notebook.title} />
               </ListItemButton>
             );
           })
-        : "Click ADD to create notebook"}
+        : "Click ADD to add notebook"}
     </List>
   );
 };
