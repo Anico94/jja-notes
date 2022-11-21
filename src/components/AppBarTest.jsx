@@ -152,7 +152,7 @@ export default function SearchAppBar() {
     }
     return (
       <Box sx={{ flexGrow: 0 }}>
-        <Tooltip title="Open settings">
+        <Tooltip title="Open user options">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar>{getUser(user)[0]}</Avatar>
           </IconButton>
