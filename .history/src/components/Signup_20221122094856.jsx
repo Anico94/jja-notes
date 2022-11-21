@@ -78,9 +78,9 @@ const Signup = () => {
                 Submit
               </button>
             </form>
-            <div>
-              already registered? <Link to="/">Login</Link>
-            </div>
+            <p>
+              already registered? <Link to="/login">Login</Link>
+            </p>
           </div>
         </div>
       </div>

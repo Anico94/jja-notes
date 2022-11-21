@@ -53,7 +53,7 @@ const auth = getAuth();
 
 // Sign up
 
-const signUp = async (email, password) => {
+const signUp = async (email, password, name) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -63,7 +63,7 @@ const signUp = async (email, password) => {
     const user = userCredential.user;
     await addDoc(collection(db, "users"), {
       uid: user.uid,
-      name: "",
+      name: name,
       authProvider: "local",
       email: user.email,
       // documentID: user.documentID,

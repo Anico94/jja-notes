@@ -78,11 +78,11 @@ const Signup = () => {
                 Submit
               </button>
             </form>
-            <div>
-              already registered? <Link to="/">Login</Link>
-            </div>
           </div>
         </div>
+        <p>
+          already registered? <Link to="/">Login</Link>
+        </p>
       </div>
     </div>
   );
