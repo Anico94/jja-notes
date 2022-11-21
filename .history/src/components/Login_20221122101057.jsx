@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import logo from "../assets/1.png";
 import thumbnail from "../assets/2.png";
-import "../Login.scss";
+import "../Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -23,10 +23,6 @@ const Reset = () => {
         <div className="login-info">
           <img src={thumbnail} alt="App Thumbnail" className="thumbnail" />
           <h2>Password Reset</h2>
-          <p>
-            Enter your user account&apos;s verified email address and we will
-            send you a password reset link.
-          </p>
           <input
             type="text"
             className="login__textBox"
@@ -34,10 +30,7 @@ const Reset = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
           />
-          <button
-            className="login__btn login__google"
-            onClick={() => sendPasswordReset(email)}
-          >
+          <button onClick={() => sendPasswordReset(email)}>
             Send password reset email
           </button>
         </div>
