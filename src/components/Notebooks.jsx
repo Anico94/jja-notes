@@ -15,7 +15,14 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import BookIcon from "@mui/icons-material/Book";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { auth, db } from "../firebase-config";
-import { query, collection, getDocs, where, getDoc } from "firebase/firestore";
+import {
+  query,
+  collection,
+  getDocs,
+  where,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { IconButton } from "@mui/material";
@@ -24,15 +31,16 @@ import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import Button from "@mui/material/Button";
 
 const Notebooks = (props) => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const [user] = useAuthState(auth);
   const [notebookRefs, setNotebookRefs] = useState([]);
   const [docs, setDocs] = useState([]);
   // const [notebooks, setNotebooks] = useState([]);
   const [q, setQ] = useState("");
 
-  const handleClick = () => {
-    props.onClick();
+  const handleClick = (e) => {
+    console.log(e.target.offsetParent.attributes.notebookref);
+    props.onClick(e.target.offsetParent.attributes.notebookref);
   };
 
   const fetchNotebooks = async () => {
@@ -60,6 +68,21 @@ const Notebooks = (props) => {
   }
   // }, []);
 
+  const _handleAdd = async () => {
+    console.log("ADD CLICKED");
+    try {
+      const docRef = await addDoc(collection(db, "notebooks"), {
+        title: "New Notebook",
+        users: [user.uid],
+      }).then(function (docRef) {
+        console.log("Document written with ID: ", docRef.id);
+        updateDoc(docRef, { ref: docRef.id });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -72,7 +95,11 @@ const Notebooks = (props) => {
               <BookIcon />
             </ListItemIcon>
             Notebooks
-            <Button variant="contained" endIcon={<LibraryAddIcon />}>
+            <Button
+              variant="contained"
+              endIcon={<LibraryAddIcon />}
+              onClick={_handleAdd}
+            >
               Add
             </Button>
           </div>
@@ -82,7 +109,11 @@ const Notebooks = (props) => {
       {notebooks?.length > 0
         ? notebooks.map((notebook) => {
             return (
-              <ListItemButton key={notebook.ref} onClick={handleClick}>
+              <ListItemButton
+                key={notebook.ref}
+                onClick={handleClick}
+                notebookref={notebook.ref}
+              >
                 <ListItemText primary={notebook.title} />
               </ListItemButton>
             );
