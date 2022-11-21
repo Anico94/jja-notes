@@ -34,7 +34,7 @@ import {
 
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_API_KEY}`,
-  authDomain: "jja-notes.firebaseapp.com",
+  authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
   projectId: "jja-notes",
   storageBucket: "jja-notes.appspot.com",
   messagingSenderId: "421644779194",
