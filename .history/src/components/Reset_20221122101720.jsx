@@ -18,15 +18,15 @@ const Reset = () => {
       <div className="login__container left">
         <img src={logo} alt="App Logo" className="logo" />
         <h3>This can be the logo of the reset page</h3>
+        <p>
+          Enter your user account&apos;s verified email address and we will send
+          you a password reset link.
+        </p>
       </div>
       <div className="login__container right">
         <div className="login-info">
           <img src={thumbnail} alt="App Thumbnail" className="thumbnail" />
           <h2>Password Reset</h2>
-          <p>
-            Enter your user account&apos;s verified email address and we will
-            send you a password reset link.
-          </p>
           <input
             type="text"
             className="login__textBox"
