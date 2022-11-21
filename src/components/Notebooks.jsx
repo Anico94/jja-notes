@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../MainMenu.css";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
@@ -38,15 +38,12 @@ const Notebooks = (props) => {
 
   // const fetchNotebooks = async () => {
   //   try {
-  //     // const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-  //     // const doc = await getDocs(q);
-  //     // const data = doc.docs.data();
-  //     const usersRef = collection(db, "users");
-  //     const usersSnap = await getDoc(usersRef);
-  //     const [docs, loading, error] = useCollectionData(q);
-  //     // const userDocument = q.document();
-  //     // const documentID = userDocument.documentID;
-  //     console.log(docs.snapshotChanges());
+  // const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+  // const doc = await getDocs(q);
+  // const data = doc.docs.data();
+
+  // const userDocument = q.document();
+  // const documentID = userDocument.documentID;
   //   } catch (err) {
   //     console.log(err);
   //   }
@@ -55,6 +52,23 @@ const Notebooks = (props) => {
   // useEffect(() => {
   //   fetchNotebooks();
   // }, [user]);
+
+  const [notebookRefs, setNotebookRefs] = useState([]);
+
+  const fetchNotebooks = async () => {
+    try {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const [docs, loading, error] = useCollectionData(q);
+      // const doc = getDocs(q);
+      setNotebookRefs(docs[0].notebookref);
+      console.log(docs[0].notebookref);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchNotebooks();
+  }, [user]);
 
   return (
     <List
@@ -75,30 +89,15 @@ const Notebooks = (props) => {
         </ListSubheader>
       }
     >
-      {/* TODO: move icons to a higher level */}
-      <ListItemButton onClick={handleClick}>
-        <ListItemText primary="Notebook 1" />
-      </ListItemButton>
-
-      <ListItemButton>
-        <ListItemText primary="Note Book 2" />
-      </ListItemButton>
-
-      <ListItemButton onClick={handleClick}>
-        <ListItemText primary="Note Book 3" />
-        {/* {open ? <ExpandLess /> : <ExpandMore />} */}
-      </ListItemButton>
-
-      {/* <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <DescriptionIcon />
-            </ListItemIcon>
-            <ListItemText primary="Page 1" />
-          </ListItemButton>
-        </List>
-      </Collapse> */}
+      {notebookRefs.length > 0
+        ? notebookRefs.map((ref) => {
+            return (
+              <ListItemButton key={ref} onClick={handleClick}>
+                <ListItemText primary={ref} />
+              </ListItemButton>
+            );
+          })
+        : "Click ADD to create notebook"}
     </List>
   );
 };

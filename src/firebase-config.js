@@ -11,6 +11,7 @@ import {
   query,
   getDocs,
   docs,
+  updateDoc,
 } from "firebase/firestore";
 
 import {
@@ -66,6 +67,9 @@ const signUp = async (email, password) => {
       authProvider: "local",
       email: user.email,
       // documentID: user.documentID,
+    }).then(function (docRef) {
+      console.log("Document written with ID: ", docRef.id);
+      updateDoc(docRef, { ref: docRef.id });
     });
     console.log("Sign up successful");
     return [true, user.uid];
@@ -121,6 +125,9 @@ const signInWithGoogle = async () => {
         name: user.displayName,
         authProvider: "google",
         email: user.email,
+      }).then(function (docRef) {
+        console.log("Document written with ID: ", docRef.id);
+        updateDoc(docRef, { ref: docRef.id });
       });
     }
   } catch (error) {
