@@ -84,7 +84,7 @@ const Pages = (props) => {
     console.log("ADD PAGE CLICKED");
     try {
       const docRef = await addDoc(collection(db, "pages"), {
-        title: "New Page",
+        title: `Page ${pages.length + 1}`,
         notebookRef: props.notebookSelected.slice(1),
         users: [user.uid],
       }).then(function (docRef) {
