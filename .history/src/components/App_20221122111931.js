@@ -43,7 +43,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/profile/:uid" element={<Profile />} />
           <Route path="/reset" element={<Reset />} />
-          <Route path="/profile/:uid/edit" element={<ProfileEdit />} />
+          <Route path="/profile/:uid/edit" element={<ProfileEdit} />
         </Routes>
       </div>
     </Router>

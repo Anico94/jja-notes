@@ -53,8 +53,6 @@ const db = getFirestore(app);
 
 const auth = getAuth();
 
-const storage = getStorage(app);
-
 // Sign up
 
 const signUp = async (email, password, name) => {
@@ -153,7 +151,6 @@ const sendPasswordReset = async (email) => {
 export {
   auth,
   db,
-  storage,
   signInWithGoogle,
   signUp,
   signIn,

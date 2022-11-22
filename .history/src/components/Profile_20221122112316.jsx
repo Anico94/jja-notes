@@ -1,5 +1,5 @@
 import { auth, logOut } from "../firebase-config";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SearchAppBar from "./AppBarTest";
 import MainMenu from "./Notebooks";
