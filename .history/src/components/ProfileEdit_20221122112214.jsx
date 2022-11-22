@@ -1,10 +1,10 @@
 import { auth, logOut } from "../firebase-config";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SearchAppBar from "./AppBarTest";
 import MainMenu from "./Notebooks";
 
-const Profile = () => {
+const ProfileEdit = () => {
   const navigate = useNavigate();
   //   const [currentUser, setCurrentUser] = useState();
   const [user] = useAuthState(auth);
@@ -48,4 +48,4 @@ const Profile = () => {
     </div>
   );
 };
-export default Profile;
+export default ProfileEdit;

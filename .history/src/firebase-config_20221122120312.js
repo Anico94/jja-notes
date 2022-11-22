@@ -153,7 +153,6 @@ const sendPasswordReset = async (email) => {
 export {
   auth,
   db,
-  storage,
   signInWithGoogle,
   signUp,
   signIn,

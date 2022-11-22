@@ -1,10 +1,12 @@
 import { auth, logOut } from "../firebase-config";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SearchAppBar from "./AppBarTest";
 import MainMenu from "./Notebooks";
+import { useState } from "react";
 
-const Profile = () => {
+const ProfileEdit = () => {
+  const [avatar, setAvatar] = useState("");
   const navigate = useNavigate();
   //   const [currentUser, setCurrentUser] = useState();
   const [user] = useAuthState(auth);
@@ -17,6 +19,8 @@ const Profile = () => {
     }
   };
 
+  const uploadImage = () => {};
+
   const currentUserInfo = (user) => {
     if (!user) {
       navigate("/");
@@ -24,14 +28,22 @@ const Profile = () => {
     }
     return (
       <div>
-        <h1>Welcome Back {user.displayName}!</h1>
-        <p>Display Name: {user.displayName}</p>
-        <p>
-          Email: {user.email} ({user.emailVerified ? "verified" : "unverified"})
-        </p>
-        <p>Last Logged In: {Date(Date.parse(user.metadata.lastSignInTime))}</p>
-        <h3>TODO: add popup that allows 1. edit display name 2. avatar</h3>
-        <Link to="/profile/:uid/edit">Edit</Link>
+        <div>
+          <h1>Welcome Back {user.displayName}!</h1>
+          <p>Display Name: {user.displayName}</p>
+          <p>
+            Email: {user.email} (
+            {user.emailVerified ? "verified" : "unverified"})
+          </p>
+          <p>
+            Last Logged In: {Date(Date.parse(user.metadata.lastSignInTime))}
+          </p>
+          <h3>TODO: add popup that allows 1. edit display name 2. avatar</h3>
+        </div>
+        <div>
+          <input type="file" accept="image/*" />
+          <button>upload image</button>
+        </div>
       </div>
     );
   };
@@ -48,4 +60,4 @@ const Profile = () => {
     </div>
   );
 };
-export default Profile;
+export default ProfileEdit;
