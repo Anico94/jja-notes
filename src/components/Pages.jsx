@@ -35,17 +35,30 @@ const Pages = (props) => {
   const [user] = useAuthState(auth);
   const [q, setQ] = useState("");
   const [docs, setDocs] = useState([]);
+  const [pageSelected, setPageSelected] = useState("");
 
-  const handleClick = () => {
-    // setOpen(!open);
-    console.log("clicked on page");
+  const handleClick = (e) => {
+    const ref = e.target.offsetParent.attributes.pageref?.nodeValue;
+    if (ref) {
+      props.onClick(ref);
+      setPageSelected(ref);
+    }
+  };
+
+  const handleClickDiv = (e) => {
+    const ref = e.target.attributes.pageref?.nodeValue;
+    if (ref) {
+      props.onClick(e.target.attributes.pageref?.nodeValue);
+      setPageSelected(e.target.attributes.pageref?.nodeValue);
+    }
   };
 
   const fetchPages = async () => {
     console.log("Fetching pages with new ref:", props.notebookSelected);
     try {
       const pageQuery = query(
-        collection(db, "notebooks", "yiSjSyrsASc1LM0cPpLX", "pages")
+        collection(db, "pages"),
+        where("notebookRef", "==", props.notebookSelected.slice(1))
       );
       setQ(pageQuery);
       const doc = await getDocs(pageQuery);
@@ -67,6 +80,22 @@ const Pages = (props) => {
   }
   // }, []);
 
+  const _handleAdd = async () => {
+    console.log("ADD PAGE CLICKED");
+    try {
+      const docRef = await addDoc(collection(db, "pages"), {
+        title: "New Page",
+        notebookRef: props.notebookSelected.slice(1),
+        users: [user.uid],
+      }).then(function (docRef) {
+        console.log("Document written with ID: ", docRef.id);
+        updateDoc(docRef, { ref: docRef.id });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -82,6 +111,7 @@ const Pages = (props) => {
             <Button
               variant="contained"
               endIcon={<LibraryAddIcon />}
+              onClick={_handleAdd}
               size="small"
             >
               Add
@@ -93,14 +123,16 @@ const Pages = (props) => {
       {pages?.length > 0
         ? pages.map((page) => {
             return (
-              <ListItemButton
-                key={page.ref}
-                onClick={handleClick}
-                pageref={page.ref}
-                // selected={notebook.ref === props.selected}
-              >
-                <ListItemText primary={page.title} />
-              </ListItemButton>
+              <div key={page.ref} onClick={handleClickDiv}>
+                <ListItemButton
+                  key={page.ref}
+                  onClick={handleClick}
+                  pageref={page.ref}
+                  selected={page.ref === pageSelected}
+                >
+                  <ListItemText primary={page.title} />
+                </ListItemButton>
+              </div>
             );
           })
         : "Click ADD to add page"}
