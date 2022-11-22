@@ -18,7 +18,7 @@ const Page = () => {
 
   console.log(content);
 
-  const _convertToHTML = () => {
+  const _savePage = () => {
     setContent(editorRef.current.getContent());
     setEditor(false);
   };
@@ -33,11 +33,11 @@ const Page = () => {
         <Button variant="outlined" size="small" onClick={log}>
           Log editor content
         </Button>
-        <Button variant="outlined" size="small" onClick={_convertToHTML}>
-          Convert to html
+        <Button variant="outlined" size="small" onClick={_savePage}>
+          Save
         </Button>
         <Button variant="outlined" size="small" onClick={_convertToText}>
-          Convert back to editor
+          Edit
         </Button>
       </div>
       <div className={editor ? "hide-text" : ""}>{parse(content)}</div>
