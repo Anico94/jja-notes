@@ -39,8 +39,13 @@ const Notebooks = (props) => {
   const [q, setQ] = useState("");
 
   const handleClick = (e) => {
-    console.log(e.target.offsetParent.attributes.notebookref);
-    props.onClick(e.target.offsetParent.attributes.notebookref);
+    // console.log(e.target);
+    props.onClick(e.target.offsetParent.attributes.notebookref?.nodeValue);
+  };
+
+  const handleClickDiv = (e) => {
+    // console.log(e.target);
+    props.onClick(e.target.attributes.notebookref?.nodeValue);
   };
 
   const fetchNotebooks = async () => {
@@ -99,6 +104,7 @@ const Notebooks = (props) => {
               variant="contained"
               endIcon={<LibraryAddIcon />}
               onClick={_handleAdd}
+              size="small"
             >
               Add
             </Button>
@@ -109,13 +115,16 @@ const Notebooks = (props) => {
       {notebooks?.length > 0
         ? notebooks.map((notebook) => {
             return (
-              <ListItemButton
-                key={notebook.ref}
-                onClick={handleClick}
-                notebookref={notebook.ref}
-              >
-                <ListItemText primary={notebook.title} />
-              </ListItemButton>
+              <div key={notebook.ref} onClick={handleClickDiv}>
+                <ListItemButton
+                  onClick={handleClick}
+                  // key={notebook.ref}
+                  notebookref={notebook.ref}
+                  selected={notebook.ref === props.selected}
+                >
+                  <ListItemText primary={notebook.title} />
+                </ListItemButton>
+              </div>
             );
           })
         : "Click ADD to add notebook"}
