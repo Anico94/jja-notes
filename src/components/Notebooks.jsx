@@ -40,7 +40,7 @@ const Notebooks = (props) => {
 
   const handleClick = (e) => {
     console.log(e.target.offsetParent.attributes.notebookref?.nodeValue);
-    // props.onClick(e.target.offsetParent.attributes.notebookref.nodeValue);
+    props.onClick(e.target.offsetParent.attributes.notebookref.nodeValue);
   };
 
   const fetchNotebooks = async () => {
