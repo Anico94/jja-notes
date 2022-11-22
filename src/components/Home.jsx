@@ -10,10 +10,9 @@ const Home = () => {
   const [open, setOpen] = useState(true);
   const [openPages, setOpenPages] = useState(false);
   const [notebookSelected, setNotebookSelected] = useState("");
+  const [previousNotebookSelected, setPreviousNotebookSelected] = useState("");
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const handleClick = () => {};
 
   const notebookOnClickWrapper = (notebookRef) => {
     showPages();
@@ -21,7 +20,15 @@ const Home = () => {
   };
 
   const showPages = () => {
-    setOpenPages(!openPages);
+    if (notebookSelected === previousNotebookSelected) {
+      console.log("notebookSelected", notebookSelected);
+      console.log("previous selected", previousNotebookSelected);
+      setOpenPages(!openPages);
+    } else {
+      console.log("notebookSelected", notebookSelected);
+      console.log("previous selected", previousNotebookSelected);
+      setPreviousNotebookSelected(notebookSelected);
+    }
   };
 
   const fetchNotebookRef = (notebookRef) => {
@@ -34,10 +41,13 @@ const Home = () => {
       <SearchAppBar className="search-app-bar" />
       <div className="main-app">
         <div className="main-menu">
-          <Notebooks onClick={notebookOnClickWrapper} />
+          <Notebooks
+            onClick={notebookOnClickWrapper}
+            selected={notebookSelected}
+          />
         </div>
         <div className="main-menu" hidden={!openPages}>
-          <Pages />
+          <Pages notebookSelected={notebookSelected} />
         </div>
         <div className="main-app">
           <Notes />

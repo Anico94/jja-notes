@@ -39,8 +39,8 @@ const Notebooks = (props) => {
   const [q, setQ] = useState("");
 
   const handleClick = (e) => {
-    console.log(e.target.offsetParent.attributes.notebookref);
-    props.onClick(e.target.offsetParent.attributes.notebookref);
+    console.log(e.target.offsetParent.attributes.notebookref?.nodeValue);
+    // props.onClick(e.target.offsetParent.attributes.notebookref.nodeValue);
   };
 
   const fetchNotebooks = async () => {
@@ -113,6 +113,7 @@ const Notebooks = (props) => {
                 key={notebook.ref}
                 onClick={handleClick}
                 notebookref={notebook.ref}
+                selected={notebook.ref === props.selected}
               >
                 <ListItemText primary={notebook.title} />
               </ListItemButton>
