@@ -9,7 +9,6 @@ import { auth } from "../firebase-config";
 import SearchAppBar from "./AppBarTest";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import ProfileEdit from "./ProfileEdit";
 
 function App() {
   // console.log(process.env.REACT_APP_API_KEY);
@@ -43,7 +42,6 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/profile/:uid" element={<Profile />} />
           <Route path="/reset" element={<Reset />} />
-          <Route path="/profile/:uid/edit" element={<ProfileEdit />} />
         </Routes>
       </div>
     </Router>
