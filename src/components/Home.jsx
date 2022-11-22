@@ -11,6 +11,7 @@ const Home = () => {
   const [openPages, setOpenPages] = useState(false);
   const [notebookSelected, setNotebookSelected] = useState("");
   const [previousNotebookSelected, setPreviousNotebookSelected] = useState("");
+  const [pageSelected, setPageSelected] = useState("");
 
   const handleClick = () => {};
 
@@ -42,6 +43,11 @@ const Home = () => {
     setNotebookSelected(notebookRef);
   };
 
+  const fetchPageRef = (pageRef) => {
+    console.log("PageRef collected:", pageRef);
+    setPageSelected(pageRef);
+  };
+
   return (
     <div className="home-page">
       <SearchAppBar className="search-app-bar" />
@@ -53,10 +59,10 @@ const Home = () => {
           />
         </div>
         <div className="main-menu" hidden={!openPages}>
-          <Pages notebookSelected={notebookSelected} />
+          <Pages notebookSelected={notebookSelected} onClick={fetchPageRef} />
         </div>
         <div className="main-app">
-          <Notes />
+          <Notes pageSelected={pageSelected} />
         </div>
       </div>
     </div>

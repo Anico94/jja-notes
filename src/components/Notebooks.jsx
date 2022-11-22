@@ -75,9 +75,10 @@ const Notebooks = (props) => {
 
   const _handleAdd = async () => {
     console.log("ADD CLICKED");
+    console.log("next notebook:");
     try {
       const docRef = await addDoc(collection(db, "notebooks"), {
-        title: "New Notebook",
+        title: `Notebook ${notebooks.length + 1}`,
         users: [user.uid],
       }).then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);
