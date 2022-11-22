@@ -5,3 +5,9 @@
 .hide-text {
   display: none;
 }
+
+.page-buttons {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
