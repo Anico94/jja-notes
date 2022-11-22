@@ -21,18 +21,24 @@ const Home = () => {
 
   const showPages = () => {
     if (notebookSelected === previousNotebookSelected) {
-      console.log("notebookSelected", notebookSelected);
-      console.log("previous selected", previousNotebookSelected);
+      // console.log("notebookSelected", notebookSelected);
+      // console.log("previous selected", previousNotebookSelected);
       setOpenPages(!openPages);
     } else {
-      console.log("notebookSelected", notebookSelected);
-      console.log("previous selected", previousNotebookSelected);
+      // console.log("notebookSelected", notebookSelected);
+      // console.log("previous selected", previousNotebookSelected);
       setPreviousNotebookSelected(notebookSelected);
+      setOpenPages(true);
     }
   };
 
   const fetchNotebookRef = (notebookRef) => {
-    console.log(notebookRef);
+    console.log("NotebookRef collected:", notebookRef);
+    if (notebookRef === undefined) {
+      console.log("abandoning...");
+      return;
+    }
+    console.log("setting", notebookRef);
     setNotebookSelected(notebookRef);
   };
 

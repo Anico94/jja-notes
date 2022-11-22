@@ -42,13 +42,14 @@ const Pages = (props) => {
   };
 
   const fetchPages = async () => {
+    console.log("Fetching pages with new ref:", props.notebookSelected);
     try {
       const pageQuery = query(
-        collection(db, "notebooks", props.notebookSelected, "pages")
+        collection(db, "notebooks", "yiSjSyrsASc1LM0cPpLX", "pages")
       );
       setQ(pageQuery);
       const doc = await getDocs(pageQuery);
-      console.log(doc);
+      console.log("docs from Pages:", doc.docs);
       setDocs(doc.docs);
     } catch (err) {
       console.log("still working");
@@ -78,7 +79,11 @@ const Pages = (props) => {
               <DescriptionIcon />
             </ListItemIcon>
             Pages
-            <Button variant="contained" endIcon={<LibraryAddIcon />}>
+            <Button
+              variant="contained"
+              endIcon={<LibraryAddIcon />}
+              size="small"
+            >
               Add
             </Button>
           </div>
