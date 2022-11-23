@@ -85,11 +85,19 @@ const Pages = (props) => {
   }
   // }, []);
 
+  const askForPageName = () => {
+    const name = prompt("What is the name of the page?", "Page Name");
+    console.log(name);
+    return name;
+  };
+
   const _handleAdd = async () => {
     console.log("ADD PAGE CLICKED");
+    // run a function to get the name of the page
+    const pageName = askForPageName();
     try {
       const docRef = await addDoc(collection(db, "pages"), {
-        title: `Page ${pages.length + 1}`,
+        title: pageName ? pageName : `Page ${pages.length + 1}`,
         notebookRef: props.notebookSelected.slice(1),
         users: [user.uid],
         content: "<h1>Title<h1>",
