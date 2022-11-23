@@ -10,6 +10,10 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { Box, Card, TextField } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import Fab from "@mui/material/Fab";
+import NavigationIcon from "@mui/icons-material/Navigation";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -32,6 +36,11 @@ const ProfileEdit = () => {
     setUserName(e.target.value);
   };
 
+  const _handleClick = () => {
+    console.log("imageclick");
+    const imgInput = document.getElementById("imgInput");
+    imgInput.click();
+  };
   // image upload
   const handleImgChange = (e) => {
     setImageUpload(e.target.files[0]);
@@ -75,7 +84,30 @@ const ProfileEdit = () => {
           <Stack spacing={3}>
             <Card sx={{ padding: 10 }}>
               <Stack spacing={4}>
-                <Avatar src={imageList[0]} sx={{ width: 100, height: 100 }} />
+                <div className="avator_frame">
+                  <Avatar
+                    src={imageDisplay ? imageDisplay : imageList[0]}
+                    sx={{ width: 100, height: 100 }}
+                    onClick={_handleClick}
+                  />
+                  <Fab
+                    variant="extended"
+                    size="small"
+                    color="primary"
+                    aria-label="upload picture"
+                  >
+                    <PhotoCamera />
+                  </Fab>
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="label"
+                  >
+                    <input hidden accept="image/*" type="file" />
+                    <PhotoCamera />
+                  </IconButton>
+                </div>
+
                 <p>Name: {user.displayName}</p>
                 <input
                   required
@@ -93,16 +125,15 @@ const ProfileEdit = () => {
           </Stack>
         </div>
         <div>
-          <img src={imageDisplay} />
           <input
+            hidden
+            id="imgInput"
             type="file"
             required
             accept="image/*"
             onChange={handleImgChange}
           />
-          {imageList.map((url) => {
-            return <img src={url} key={url} />;
-          })}
+
           <Button variant="contained" onClick={uploadImage}>
             upload image
           </Button>
