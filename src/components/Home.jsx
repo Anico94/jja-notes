@@ -48,6 +48,10 @@ const Home = () => {
     setPageSelected(pageRef);
   };
 
+  const resetPage = () => {
+    setPageSelected("");
+  };
+
   return (
     <div className="home-page">
       <SearchAppBar className="search-app-bar" />
@@ -62,7 +66,7 @@ const Home = () => {
           <Pages notebookSelected={notebookSelected} onClick={fetchPageRef} />
         </div>
         <div className="main-app">
-          <Notes pageSelected={pageSelected} />
+          <Notes pageSelected={pageSelected} resetPage={resetPage} />
         </div>
       </div>
     </div>
