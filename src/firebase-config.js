@@ -117,6 +117,11 @@ const logOut = async () => {
 // Google login
 
 const googleProvider = new GoogleAuthProvider();
+//make user choose their google accounts if they have several
+// googleProvider.setCustomParameters({
+//   prompt: "select_account",
+// });
+
 const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
