@@ -21,6 +21,10 @@ const Home = () => {
   };
 
   const showPages = () => {
+    if (notebookSelected === "") {
+      setOpenPages(false);
+    }
+
     if (notebookSelected === previousNotebookSelected) {
       // console.log("notebookSelected", notebookSelected);
       // console.log("previous selected", previousNotebookSelected);
@@ -29,7 +33,7 @@ const Home = () => {
       // console.log("notebookSelected", notebookSelected);
       // console.log("previous selected", previousNotebookSelected);
       setPreviousNotebookSelected(notebookSelected);
-      setOpenPages(true);
+      // setOpenPages(true);
     }
   };
 
