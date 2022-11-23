@@ -211,7 +211,7 @@ export default function SearchAppBar() {
           >
             JJA Notes
           </Typography>
-          <Search>
+          <Search sx={{ ml: 2, mr: 2 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
