@@ -38,6 +38,10 @@ const Profile = () => {
       });
   }, []);
 
+  const _handleBack = () => {
+    navigate(`/home/${user.uid}`);
+  };
+
   const currentUserInfo = (user) => {
     if (!user) {
       navigate("/");
