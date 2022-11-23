@@ -1,6 +1,15 @@
-/* .page-line-items {
+.instructional-messages {
   display: flex;
-} */
+  justify-content: center;
+}
+.notebook-line-items {
+  display: flex;
+  justify-content: space-between;
+}
+
+.notebook-titles {
+  flex-grow: 1;
+}
 
 .bin-button.hide {
   display: none;

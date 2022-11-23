@@ -99,8 +99,28 @@ const Notebooks = (props) => {
   };
 
   const _handleDelete = () => {
-    deleteDoc(doc(db, "notebooks", props.selected));
-    props.resetNotebook();
+    if (window.confirm("Are you sure you want to delete this notebook?")) {
+      deleteDoc(doc(db, "notebooks", props.selected));
+      props.resetNotebook();
+    }
+  };
+
+  const showBinButton = (notebookRef) => {
+    if (notebookRef === props.selected) {
+      return (
+        <div className="bin-button">
+          <IconButton
+            color="primary"
+            aria-label="delete"
+            component="label"
+            notebookref={notebookRef}
+            onClick={_handleDelete}
+          >
+            <DeleteForeverIcon />
+          </IconButton>
+        </div>
+      );
+    }
   };
 
   return (
@@ -111,18 +131,16 @@ const Notebooks = (props) => {
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
           <div className="menu-actions">
-            <ListItemIcon>
-              <BookIcon />
-            </ListItemIcon>
+            <BookIcon />
             Notebooks
-            <Button
-              variant="contained"
-              endIcon={<LibraryAddIcon />}
+            <IconButton
+              color="primary"
+              aria-label="add"
+              component="label"
               onClick={_handleAdd}
-              size="small"
             >
-              Add
-            </Button>
+              <LibraryAddIcon />
+            </IconButton>
           </div>
         </ListSubheader>
       }
@@ -130,8 +148,8 @@ const Notebooks = (props) => {
       {notebooks?.length > 0
         ? notebooks.map((notebook) => {
             return (
-              <div key={notebook.ref}>
-                <div onClick={handleClickDiv}>
+              <div key={notebook.ref} className="notebook-line-items">
+                <div onClick={handleClickDiv} className="notebook-titles">
                   <ListItemButton
                     onClick={handleClick}
                     // key={notebook.ref}
@@ -141,23 +159,7 @@ const Notebooks = (props) => {
                     <ListItemText primary={notebook.title} />
                   </ListItemButton>
                 </div>
-                <div
-                  className={
-                    notebook.ref === props.selected
-                      ? "bin-button"
-                      : "bin-button hide"
-                  }
-                >
-                  <IconButton
-                    color="primary"
-                    aria-label="delete"
-                    component="label"
-                    notebookref={notebook.ref}
-                    onClick={_handleDelete}
-                  >
-                    <DeleteForeverIcon />
-                  </IconButton>
-                </div>
+                {showBinButton(notebook.ref)}
               </div>
             );
           })
