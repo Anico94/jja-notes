@@ -35,6 +35,7 @@ import firebase from "firebase/compat/app";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Box from "@mui/material/Box";
 import Popper from "@mui/material/Popper";
+import Typography from "@mui/material/Typography";
 // web.cjs is required for IE11 support
 
 const Notebooks = (props) => {
@@ -145,25 +146,29 @@ const Notebooks = (props) => {
         </ListSubheader>
       }
     >
-      {notebooks?.length > 0
-        ? notebooks.map((notebook) => {
-            return (
-              <div key={notebook.ref} className="notebook-line-items">
-                <div onClick={handleClickDiv} className="notebook-titles">
-                  <ListItemButton
-                    onClick={handleClick}
-                    // key={notebook.ref}
-                    notebookref={notebook.ref}
-                    selected={notebook.ref === props.selected}
-                  >
-                    <ListItemText primary={notebook.title} />
-                  </ListItemButton>
-                </div>
-                {showBinButton(notebook.ref)}
+      {notebooks?.length > 0 ? (
+        notebooks.map((notebook) => {
+          return (
+            <div key={notebook.ref} className="notebook-line-items">
+              <div onClick={handleClickDiv} className="notebook-titles">
+                <ListItemButton
+                  onClick={handleClick}
+                  // key={notebook.ref}
+                  notebookref={notebook.ref}
+                  selected={notebook.ref === props.selected}
+                >
+                  <ListItemText primary={notebook.title} />
+                </ListItemButton>
               </div>
-            );
-          })
-        : "Click ADD to add notebook"}
+              {showBinButton(notebook.ref)}
+            </div>
+          );
+        })
+      ) : (
+        <div className="instructional-messages">
+          <Typography variant="h6">Click + to add.</Typography>
+        </div>
+      )}
     </List>
   );
 };
