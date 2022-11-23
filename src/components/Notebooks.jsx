@@ -81,12 +81,17 @@ const Notebooks = (props) => {
   }
   // }, []);
 
+  //function to get the notbook name
+  const askForNotebookName = () => {
+    const name = prompt("What is the name of the notebook?", "Notebook Name");
+    return name;
+  };
+
   const _handleAdd = async () => {
-    console.log("ADD CLICKED");
-    console.log("next notebook:");
+    const notebookName = askForNotebookName();
     try {
       const docRef = await addDoc(collection(db, "notebooks"), {
-        title: `Notebook ${notebooks.length + 1}`,
+        title: notebookName ? notebookName : `Notebook ${notebooks.length + 1}`,
         users: [user.uid],
         createdAt: Date.now(),
         modifiedAt: Date.now(),
