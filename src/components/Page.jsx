@@ -17,9 +17,13 @@ import { db } from "../firebase-config";
 import watermark from "../assets/3.png";
 import { async } from "@firebase/util";
 
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+
 const Page = (props) => {
   const [content, setContent] = useState("<h1>This is a title</h1>");
   const editorRef = useRef(null);
+  const [isSaveHidden, setIsSaveHidden] = useState(true);
 
   useEffect(() => {
     if (props.pageSelected !== "") {
@@ -40,12 +44,18 @@ const Page = (props) => {
     setContent(editorRef.current.getContent());
     const pageRef = doc(db, "pages", props.pageSelected);
     updateDoc(pageRef, { content: editorRef.current.getContent() });
+    setIsSaveHidden(false);
+    setTimeout(() => {
+      setIsSaveHidden(true);
+    }, 2000);
   };
 
   const _deletePage = () => {
-    const pageRef = doc(db, "pages", props.pageSelected);
-    deleteDoc(pageRef);
-    props.resetPage();
+    if (confirm("Are you sure you want to delete this page?")) {
+      const pageRef = doc(db, "pages", props.pageSelected);
+      deleteDoc(pageRef);
+      props.resetPage();
+    }
   };
 
   return (
@@ -61,6 +71,11 @@ const Page = (props) => {
           <Button variant="outlined" size="small" onClick={_deletePage}>
             Delete
           </Button>
+          <div className={isSaveHidden ? "save-hidden" : ""}>
+            <Alert size="small" severity="success">
+              Your document was saved.
+            </Alert>
+          </div>
         </div>
         <Editor
           apiKey={process.env.REACT_APP_TINY_API_KEY}
