@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SearchAppBar from "./AppBarTest";
 import MainMenu from "./Notebooks";
+import Button from "@mui/material/Button";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -15,6 +16,10 @@ const Profile = () => {
     if (res) {
       navigate("/");
     }
+  };
+
+  const _handleBack = () => {
+    navigate(`/home/${user.uid}`);
   };
 
   const currentUserInfo = (user) => {
@@ -32,6 +37,9 @@ const Profile = () => {
         <p>Last Logged In: {Date(Date.parse(user.metadata.lastSignInTime))}</p>
         <h3>TODO: add popup that allows 1. edit display name 2. avatar</h3>
         <Link to="/profile/:uid/edit">Edit</Link>
+        <Button variant="outlined" size="small" onClick={_handleBack}>
+          Back
+        </Button>
       </div>
     );
   };

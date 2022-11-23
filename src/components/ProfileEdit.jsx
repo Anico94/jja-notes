@@ -54,7 +54,7 @@ const ProfileEdit = () => {
       <div>
         <div>
           <h1>Welcome Back {user.displayName}!</h1>
-          <p>Display Name: {user.uid}</p>
+          <p>Display Name: {user.displayName}</p>
           <p>
             Email: {user.email} (
             {user.emailVerified ? "verified" : "unverified"})
