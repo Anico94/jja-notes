@@ -63,14 +63,11 @@ const Home = () => {
           <Notebooks
             onClick={notebookOnClickWrapper}
             selected={notebookSelected}
+            resetNotebook={resetNotebook}
           />
         </div>
         <div className="main-menu" hidden={!openPages}>
-          <Pages
-            notebookSelected={notebookSelected}
-            onClick={fetchPageRef}
-            resetNotebook={resetNotebook}
-          />
+          <Pages notebookSelected={notebookSelected} onClick={fetchPageRef} />
         </div>
         <div className="main-app">
           <Notes pageSelected={pageSelected} resetPage={resetPage} />

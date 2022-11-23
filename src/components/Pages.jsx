@@ -33,6 +33,7 @@ import {
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import Typography from "@mui/material/Typography";
 
 const Pages = (props) => {
   const [open, setOpen] = useState(true);
@@ -111,37 +112,35 @@ const Pages = (props) => {
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
           <div className="menu-actions">
-            <ListItemIcon>
-              <DescriptionIcon />
-            </ListItemIcon>
+            <DescriptionIcon />
             Pages
-            <Button
-              variant="contained"
-              endIcon={<LibraryAddIcon />}
+            <IconButton
+              color="primary"
+              aria-label="add"
+              component="label"
               onClick={_handleAdd}
-              size="small"
             >
-              Add
-            </Button>
+              <LibraryAddIcon />
+            </IconButton>
           </div>
         </ListSubheader>
       }
     >
-      {pages?.length > 0
-        ? pages.map((page) => {
-            return (
-              <div key={page.ref} className="page-line-items">
-                <div onClick={handleClickDiv}>
-                  <ListItemButton
-                    key={page.ref}
-                    onClick={handleClick}
-                    pageref={page.ref}
-                    selected={page.ref === pageSelected}
-                  >
-                    <ListItemText primary={page.title} />
-                  </ListItemButton>
-                </div>
-                {/* <div
+      {pages?.length > 0 ? (
+        pages.map((page) => {
+          return (
+            <div key={page.ref} className="page-line-items">
+              <div onClick={handleClickDiv}>
+                <ListItemButton
+                  key={page.ref}
+                  onClick={handleClick}
+                  pageref={page.ref}
+                  selected={page.ref === pageSelected}
+                >
+                  <ListItemText primary={page.title} />
+                </ListItemButton>
+              </div>
+              {/* <div
                   className={
                     page.ref === pageSelected ? "bin-button" : "bin-button hide"
                   }
@@ -155,10 +154,14 @@ const Pages = (props) => {
                     <DeleteForeverIcon />
                   </IconButton>
                 </div> */}
-              </div>
-            );
-          })
-        : "Click ADD to add page"}
+            </div>
+          );
+        })
+      ) : (
+        <div className="instructional-messages">
+          <Typography variant="h6">Click + to add.</Typography>
+        </div>
+      )}
     </List>
   );
 };
