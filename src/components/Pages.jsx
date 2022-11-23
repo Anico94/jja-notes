@@ -28,7 +28,11 @@ import {
   where,
   addDoc,
   updateDoc,
+  orderBy,
+  deleteDoc,
 } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const Pages = (props) => {
   const [open, setOpen] = useState(true);
@@ -88,6 +92,8 @@ const Pages = (props) => {
         notebookRef: props.notebookSelected.slice(1),
         users: [user.uid],
         content: "<h1>Title<h1>",
+        createdAt: Date.now(),
+        modifiedAt: Date.now(),
       }).then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);
         updateDoc(docRef, { ref: docRef.id });
@@ -124,15 +130,31 @@ const Pages = (props) => {
       {pages?.length > 0
         ? pages.map((page) => {
             return (
-              <div key={page.ref} onClick={handleClickDiv}>
-                <ListItemButton
-                  key={page.ref}
-                  onClick={handleClick}
-                  pageref={page.ref}
-                  selected={page.ref === pageSelected}
+              <div key={page.ref} className="page-line-items">
+                <div onClick={handleClickDiv}>
+                  <ListItemButton
+                    key={page.ref}
+                    onClick={handleClick}
+                    pageref={page.ref}
+                    selected={page.ref === pageSelected}
+                  >
+                    <ListItemText primary={page.title} />
+                  </ListItemButton>
+                </div>
+                {/* <div
+                  className={
+                    page.ref === pageSelected ? "bin-button" : "bin-button hide"
+                  }
                 >
-                  <ListItemText primary={page.title} />
-                </ListItemButton>
+                  <IconButton
+                    color="primary"
+                    aria-label="delete"
+                    component="label"
+                    pageref={page.ref}
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </div> */}
               </div>
             );
           })
