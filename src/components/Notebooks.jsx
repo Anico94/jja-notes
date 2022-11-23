@@ -22,6 +22,8 @@ import {
   where,
   addDoc,
   updateDoc,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -29,6 +31,11 @@ import { IconButton } from "@mui/material";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import Button from "@mui/material/Button";
+import firebase from "firebase/compat/app";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import Box from "@mui/material/Box";
+import Popper from "@mui/material/Popper";
+// web.cjs is required for IE11 support
 
 const Notebooks = (props) => {
   const [open, setOpen] = useState(true);
@@ -55,8 +62,8 @@ const Notebooks = (props) => {
         where("users", "array-contains", user?.uid)
       );
       setQ(notebookQuery);
-      const doc = await getDocs(notebookQuery);
-      setDocs(doc.docs);
+      const document = await getDocs(notebookQuery);
+      setDocs(document.docs);
     } catch (err) {
       console.log("still working");
     }
@@ -80,6 +87,8 @@ const Notebooks = (props) => {
       const docRef = await addDoc(collection(db, "notebooks"), {
         title: `Notebook ${notebooks.length + 1}`,
         users: [user.uid],
+        createdAt: Date.now(),
+        modifiedAt: Date.now(),
       }).then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);
         updateDoc(docRef, { ref: docRef.id });
@@ -87,6 +96,11 @@ const Notebooks = (props) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const _handleDelete = () => {
+    deleteDoc(doc(db, "notebooks", props.selected));
+    props.resetNotebook();
   };
 
   return (
@@ -116,15 +130,34 @@ const Notebooks = (props) => {
       {notebooks?.length > 0
         ? notebooks.map((notebook) => {
             return (
-              <div key={notebook.ref} onClick={handleClickDiv}>
-                <ListItemButton
-                  onClick={handleClick}
-                  // key={notebook.ref}
-                  notebookref={notebook.ref}
-                  selected={notebook.ref === props.selected}
+              <div key={notebook.ref}>
+                <div onClick={handleClickDiv}>
+                  <ListItemButton
+                    onClick={handleClick}
+                    // key={notebook.ref}
+                    notebookref={notebook.ref}
+                    selected={notebook.ref === props.selected}
+                  >
+                    <ListItemText primary={notebook.title} />
+                  </ListItemButton>
+                </div>
+                <div
+                  className={
+                    notebook.ref === props.selected
+                      ? "bin-button"
+                      : "bin-button hide"
+                  }
                 >
-                  <ListItemText primary={notebook.title} />
-                </ListItemButton>
+                  <IconButton
+                    color="primary"
+                    aria-label="delete"
+                    component="label"
+                    notebookref={notebook.ref}
+                    onClick={_handleDelete}
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </div>
               </div>
             );
           })
