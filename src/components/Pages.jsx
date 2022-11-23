@@ -54,7 +54,7 @@ const Pages = (props) => {
   };
 
   const fetchPages = async () => {
-    console.log("Fetching pages with new ref:", props.notebookSelected);
+    // console.log("Fetching pages with new ref:", props.notebookSelected);
     try {
       const pageQuery = query(
         collection(db, "pages"),
@@ -62,7 +62,7 @@ const Pages = (props) => {
       );
       setQ(pageQuery);
       const doc = await getDocs(pageQuery);
-      console.log("docs from Pages:", doc.docs);
+      // console.log("docs from Pages:", doc.docs);
       setDocs(doc.docs);
     } catch (err) {
       console.log("still working");
@@ -87,6 +87,7 @@ const Pages = (props) => {
         title: `Page ${pages.length + 1}`,
         notebookRef: props.notebookSelected.slice(1),
         users: [user.uid],
+        content: "<h1>Title<h1>",
       }).then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);
         updateDoc(docRef, { ref: docRef.id });

@@ -1,47 +1,67 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import parse from "html-react-parser";
 import "../Page.css";
 import Button from "@mui/material/Button";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "../firebase-config";
+import watermark from "../assets/3.png";
+import { async } from "@firebase/util";
 
-const Page = () => {
-  const [editor, setEditor] = useState(true);
-  const [content, setContent] = useState(`<h1>Insert Title Here</h1>`);
-
+const Page = (props) => {
+  const [content, setContent] = useState("<h1>This is a title</h1>");
   const editorRef = useRef(null);
 
-  const log = () => {
-    if (editorRef.current) {
-      setContent(editorRef.current.getContent());
+  useEffect(() => {
+    if (props.pageSelected !== "") {
+      const pageRef = collection(db, "pages");
+      const singlePage = query(pageRef, where("ref", "==", props.pageSelected));
+      const getObject = async () => {
+        const document = await getDocs(singlePage);
+        setContent(
+          document._snapshot.docChanges[0].doc.data.value.mapValue.fields
+            .content.stringValue
+        );
+      };
+      getObject();
     }
-  };
-
-  console.log(content);
+  }, [props.pageSelected]);
 
   const _savePage = () => {
     setContent(editorRef.current.getContent());
-    setEditor(false);
+    const pageRef = doc(db, "pages", props.pageSelected);
+    updateDoc(pageRef, { content: editorRef.current.getContent() });
   };
 
-  const _convertToText = () => {
-    setEditor(true);
+  const _deletePage = () => {
+    const pageRef = doc(db, "pages", props.pageSelected);
+    deleteDoc(pageRef);
+    props.resetPage();
   };
 
   return (
     <div>
-      <div className="page-buttons">
-        <Button variant="outlined" size="small" onClick={log}>
-          Log editor content
-        </Button>
-        <Button variant="outlined" size="small" onClick={_savePage}>
-          Save
-        </Button>
-        <Button variant="outlined" size="small" onClick={_convertToText}>
-          Edit
-        </Button>
+      <div className={props.pageSelected ? "hide-text watermark" : "watermark"}>
+        <img src={watermark} alt="Watermark" className="watermark" />
       </div>
-      <div className={editor ? "hide-text" : ""}>{parse(content)}</div>
-      <div className={editor ? "" : "hide-editor"}>
+      <div className={props.pageSelected ? "" : "hide-editor"}>
+        <div className="page-buttons">
+          <Button variant="outlined" size="small" onClick={_savePage}>
+            Save
+          </Button>
+          <Button variant="outlined" size="small" onClick={_deletePage}>
+            Delete
+          </Button>
+        </div>
         <Editor
           apiKey={process.env.REACT_APP_TINY_API_KEY}
           onInit={(evt, editor) => (editorRef.current = editor)}
@@ -57,7 +77,7 @@ const Page = () => {
               "link",
               "image",
               "charmap",
-              "print",
+              // "print",
               "preview",
               "anchor",
               "searchreplace",
@@ -67,7 +87,7 @@ const Page = () => {
               "insertdatetime",
               "media",
               "table",
-              "paste",
+              // "paste",
               "code",
               "help",
               "wordcount",
