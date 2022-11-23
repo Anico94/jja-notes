@@ -42,6 +42,10 @@ const Profile = () => {
     navigate(`/home/${user.uid}`);
   };
 
+  const _handleEdit = () => {
+    navigate(`/profile/${user.uid}/edit`);
+  };
+
   const currentUserInfo = (user) => {
     if (!user) {
       navigate("/");
@@ -67,11 +71,16 @@ const Profile = () => {
               </Stack>
             </Card>
 
-            <Link to="/profile/:uid/edit">
-              <Button variant="contained">Edit</Button>
-            </Link>
+            {/* <Link to="/profile/:uid/edit"> */}
+            {/* </Link> */}
           </Stack>
         </div>
+        <Button variant="outlined" onClick={_handleEdit}>
+          Edit
+        </Button>
+        <Button variant="outlined" onClick={_handleBack}>
+          Back
+        </Button>
       </div>
     );
   };
