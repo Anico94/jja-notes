@@ -15,3 +15,8 @@
 .watermark {
   text-align: center;
 }
+
+.save-hidden {
+  display: none;
+  padding: 0;
+}
