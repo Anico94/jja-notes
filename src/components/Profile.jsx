@@ -58,7 +58,7 @@ const Profile = () => {
           <Stack spacing={3}>
             <Card sx={{ padding: 10 }}>
               <Stack spacing={4}>
-                <Avatar src={avatarURL} sx={{ width: 100, height: 100 }} />
+                <Avatar src={avatarURL} sx={{ width: 150, height: 150 }} />
                 <p>Name: {user.displayName}</p>
                 <p>
                   Email: {user.email} (

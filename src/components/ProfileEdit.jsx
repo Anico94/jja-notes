@@ -14,6 +14,8 @@ import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Fab from "@mui/material/Fab";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import Grid from "@mui/material/Grid";
+import "../Profile.scss";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -81,49 +83,60 @@ const ProfileEdit = () => {
       <div>
         <div>
           <h1>Welcome Back {user.displayName}!</h1>
-          <Stack spacing={3}>
-            <Card sx={{ padding: 10 }}>
-              <Stack spacing={4}>
-                <div className="avator_frame">
-                  <Avatar
-                    src={imageDisplay ? imageDisplay : imageList[0]}
-                    sx={{ width: 100, height: 100 }}
-                    onClick={_handleClick}
+
+          <Box sx={{ width: 600, height: 250, padding: 8 }}>
+            <Grid container spacing={2}>
+              <Grid xs={4}>
+                <Stack spacing={3}>
+                  <div className="avatar_frame">
+                    <div className="avatar_edit">
+                      <Avatar
+                        src={imageDisplay ? imageDisplay : imageList[0]}
+                        sx={{ width: 150, height: 150 }}
+                      />
+                    </div>
+                    <div className="edit_button">
+                      <Fab
+                        variant="extended"
+                        size="small"
+                        color="primary"
+                        aria-label="upload picture"
+                        onClick={_handleClick}
+                      >
+                        <PhotoCamera />
+                      </Fab>
+                    </div>
+                  </div>
+                  <div className="avatar_upload">
+                    <Button variant="contained" onClick={uploadImage}>
+                      upload image
+                    </Button>
+                  </div>
+                </Stack>
+              </Grid>
+              <Grid xs={8}>
+                <Stack spacing={4}>
+                  <p>Name: </p>
+                  <input
+                    required
+                    placeholder={user.displayName}
+                    onChange={handleChange}
                   />
-                  <Fab
-                    variant="extended"
-                    size="small"
-                    color="primary"
-                    aria-label="upload picture"
-                  >
-                    <PhotoCamera />
-                  </Fab>
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="label"
-                  >
-                    <input hidden accept="image/*" type="file" />
-                    <PhotoCamera />
-                  </IconButton>
-                </div>
 
-                <p>Name: {user.displayName}</p>
-                <input
-                  required
-                  placeholder={user.displayName}
-                  onChange={handleChange}
-                />
-
-                <p>
-                  Email: {user.email} (
-                  {user.emailVerified ? "verified" : "unverified"})
-                </p>
-                {/* <input placeholder={user.email} /> */}
-              </Stack>
-            </Card>
-          </Stack>
+                  <p>
+                    Email: {user.email} (
+                    {user.emailVerified ? "verified" : "unverified"})
+                  </p>
+                  {/* <input placeholder={user.email} /> */}
+                  <Button variant="contained" sx={{}}>
+                    upload
+                  </Button>
+                </Stack>
+              </Grid>
+            </Grid>
+          </Box>
         </div>
+
         <div>
           <input
             hidden
@@ -133,10 +146,6 @@ const ProfileEdit = () => {
             accept="image/*"
             onChange={handleImgChange}
           />
-
-          <Button variant="contained" onClick={uploadImage}>
-            upload image
-          </Button>
         </div>
       </div>
     );
