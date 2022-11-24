@@ -4,7 +4,10 @@ import parse from "html-react-parser";
 import "../Page.css";
 import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import {
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
 import {
   collection,
   getDocs,
@@ -17,7 +20,6 @@ import {
 import { db } from "../firebase-config";
 import watermark from "../assets/3.png";
 import { async } from "@firebase/util";
-
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 
