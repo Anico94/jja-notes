@@ -14,6 +14,7 @@ const Home = () => {
   const [pageSelected, setPageSelected] = useState("");
   const [notebookName, setNotebookName] = useState("");
   const [pageName, setPageName] = useState("");
+  const [lastEditNameTime, setLastEditNameTime] = useState(0);
 
   const handleClick = () => {};
 
@@ -39,7 +40,7 @@ const Home = () => {
     }
   };
 
-  const fetchNotebookRef = (notebookRef, notebookName) => {
+  const fetchNotebookRef = (notebookRef) => {
     console.log("NotebookRef collected:", notebookRef);
     if (notebookRef === undefined) {
       console.log("abandoning...");
@@ -52,7 +53,6 @@ const Home = () => {
 
     console.log("setting", notebookRef);
     setNotebookSelected(notebookRef);
-    setNotebookName(notebookName);
   };
 
   const fetchPageRef = (pageRef) => {
@@ -67,6 +67,15 @@ const Home = () => {
     setNotebookSelected("");
   };
 
+  const editNameTime = () => {
+    console.log("TIme set to: ", Date.now());
+    setLastEditNameTime(Date.now());
+  };
+
+  const fetchNotebookName = (notebookName) => {
+    setNotebookName(notebookName);
+  };
+
   return (
     <div className="home-page">
       <SearchAppBar className="search-app-bar" />
@@ -76,6 +85,8 @@ const Home = () => {
             onClick={notebookOnClickWrapper}
             selected={notebookSelected}
             resetNotebook={resetNotebook}
+            editNameTime={editNameTime}
+            fetchNotebookName={fetchNotebookName}
           />
         </div>
         <div className="main-menu" hidden={!openPages}>
@@ -84,13 +95,15 @@ const Home = () => {
             notebookName={notebookName}
             onClick={fetchPageRef}
             resetPage={resetPage}
+            editNameTime={editNameTime}
           />
         </div>
         <div className="main-app">
           <Notes
             pageSelected={pageSelected}
             resetPage={resetPage}
-            notebookName={notebookName}
+            // notebookName={notebookName}
+            lastEditNameTime={lastEditNameTime}
           />
         </div>
       </div>
