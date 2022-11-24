@@ -25,6 +25,8 @@ const Page = (props) => {
   const [content, setContent] = useState("<h1>This is a title</h1>");
   const editorRef = useRef(null);
   const [isSaveHidden, setIsSaveHidden] = useState(true);
+  const [pageName, setPageName] = useState("");
+  const [notebookName, setNotebookName] = useState("");
 
   useEffect(() => {
     if (props.pageSelected !== "") {
@@ -35,6 +37,14 @@ const Page = (props) => {
         setContent(
           document._snapshot.docChanges[0].doc.data.value.mapValue.fields
             .content.stringValue
+        );
+        setPageName(
+          document._snapshot.docChanges[0].doc.data.value.mapValue.fields.title
+            .stringValue
+        );
+        setNotebookName(
+          document._snapshot.docChanges[0].doc.data.value.mapValue.fields
+            .notebookName.stringValue
         );
       };
       getObject();
@@ -58,9 +68,7 @@ const Page = (props) => {
       </div>
       <div className={props.pageSelected ? "" : "hide-editor"}>
         <div className="page-buttons">
-          <h2 className="note-book-page">{`${
-            props.notebookName
-          } > ${"Page Name"}`}</h2>
+          <h2 className="note-book-page">{`${notebookName} > ${pageName}`}</h2>
           <div className={isSaveHidden ? "save-hidden" : ""}>
             <Alert size="small" severity="success">
               Your document was saved.
