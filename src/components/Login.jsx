@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import logo from "../assets/1.png";
 import thumbnail from "../assets/2.png";
+import GoogleIcon from "@mui/icons-material/Google";
 import "../Login.scss";
 
 const Login = () => {
@@ -38,7 +39,6 @@ const Login = () => {
     <div className="login">
       <div className="login__container left">
         <img src={logo} alt="App Logo" className="logo" />
-        <h3>This can be the logo of the login page</h3>
       </div>
       <div className="login__container right">
         <div className="login-info">
@@ -69,6 +69,7 @@ const Login = () => {
               className="login__btn login__google"
               onClick={signInWithGoogle}
             >
+              <GoogleIcon sx={{ mr: 2 }} />
               Login with Google
             </button>
           </div>

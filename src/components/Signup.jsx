@@ -29,7 +29,6 @@ const Signup = () => {
     <div className="login">
       <div className="login__container left">
         <img src={logo} alt="App Logo" className="logo" />
-        <h3>This can be the logo of the register page</h3>
       </div>
       <div className="login__container right">
         <div className="login-info">
