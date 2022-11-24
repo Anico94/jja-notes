@@ -51,12 +51,18 @@ const Notebooks = (props) => {
 
   const handleClick = (e) => {
     // console.log(e.target);
-    props.onClick(e.target.offsetParent.attributes.notebookref?.nodeValue);
+    props.onClick(
+      e.target.offsetParent.attributes.notebookref?.nodeValue,
+      e.target.offsetParent.attributes.notebookname?.nodeValue
+    );
   };
 
   const handleClickDiv = (e) => {
     // console.log(e.target);
-    props.onClick(e.target.attributes.notebookref?.nodeValue);
+    props.onClick(
+      e.target.attributes.notebookref?.nodeValue,
+      e.target.attributes.notebookname?.nodeValue
+    );
   };
 
   const fetchNotebooks = async () => {

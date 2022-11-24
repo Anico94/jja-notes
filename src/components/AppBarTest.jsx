@@ -16,6 +16,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logOut } from "../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
+import appLogo from "../assets/5.png";
+import "../AppBarTest.css";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -199,7 +201,7 @@ export default function SearchAppBar() {
         }}
       >
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -207,12 +209,15 @@ export default function SearchAppBar() {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
+          <a href={`/home/${getUser(user)[1]}`}>
+            <img src={appLogo} alt="App Logo" className="tiny-thumbnail" />
+          </a>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" }, ml: 2 }}
           >
             JJA Notes
           </Typography>
