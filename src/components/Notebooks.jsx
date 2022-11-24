@@ -24,6 +24,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -94,10 +95,6 @@ const Notebooks = (props) => {
     return name;
   };
 
-  const editNotebookName = () => {
-    const name = prompt("");
-  };
-
   const _handleAdd = async () => {
     const notebookName = askForNotebookName();
     try {
@@ -122,10 +119,14 @@ const Notebooks = (props) => {
     }
   };
 
-  const _handleEdit = () => {
+  const _handleEdit = async () => {
     const notebookRef = doc(db, "notebooks", props.selected);
-    updateDoc(notebookRef, { title: prompt("Name?") });
-    console.log(notebookRef);
+
+    const notebookTitle = await getDoc(notebookRef);
+    console.log();
+    updateDoc(notebookRef, {
+      title: prompt("New Name?", notebookTitle.data().title),
+    });
   };
 
   const showBinButton = (notebookRef, notebookTitle) => {
