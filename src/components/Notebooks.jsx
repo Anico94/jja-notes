@@ -36,6 +36,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Box from "@mui/material/Box";
 import Popper from "@mui/material/Popper";
 import Typography from "@mui/material/Typography";
+import EditIcon from "@mui/icons-material/Edit";
 // web.cjs is required for IE11 support
 
 const Notebooks = (props) => {
@@ -93,6 +94,10 @@ const Notebooks = (props) => {
     return name;
   };
 
+  const editNotebookName = () => {
+    const name = prompt("");
+  };
+
   const _handleAdd = async () => {
     const notebookName = askForNotebookName();
     try {
@@ -117,12 +122,27 @@ const Notebooks = (props) => {
     }
   };
 
-  const showBinButton = (notebookRef) => {
+  const _handleEdit = () => {
+    const notebookRef = doc(db, "notebooks", props.selected);
+    updateDoc(notebookRef, { title: prompt("Name?") });
+    console.log(notebookRef);
+  };
+
+  const showBinButton = (notebookRef, notebookTitle) => {
     if (notebookRef === props.selected) {
       return (
         <div className="bin-button">
           <IconButton
             color="primary"
+            aria-label="edit"
+            component="label"
+            notebookref={notebookRef}
+            onClick={_handleEdit}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="error"
             aria-label="delete"
             component="label"
             notebookref={notebookRef}
@@ -168,7 +188,7 @@ const Notebooks = (props) => {
                   notebookref={notebook.ref}
                   notebookname={notebook.title}
                   selected={notebook.ref === props.selected}
-                  sx={{ width: 200 }}
+                  sx={{ width: 160 }}
                 >
                   {/* <ListItemText
                     primary={notebook.title}
@@ -182,7 +202,7 @@ const Notebooks = (props) => {
                   </Typography>
                 </ListItemButton>
               </div>
-              {showBinButton(notebook.ref)}
+              {showBinButton(notebook.ref, notebook.title)}
             </div>
           );
         })
