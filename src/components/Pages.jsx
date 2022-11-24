@@ -116,18 +116,13 @@ const Pages = (props) => {
     }
   };
 
-  // -----------------
-
   const _handleEdit = async () => {
-    const pageRef = doc(db, "pages", props.pageSelected);
+    const pageRef = doc(db, "pages", pageSelected);
     const pageTitle = await getDoc(pageRef);
-    console.log();
     updateDoc(pageRef, {
       title: prompt("New Name?", pageTitle.data().title),
     });
   };
-
-  // --------------------
 
   const _deletePage = () => {
     if (confirm("Are you sure you want to delete this page?")) {
@@ -135,12 +130,6 @@ const Pages = (props) => {
       deleteDoc(pageRef);
       props.resetPage();
     }
-  };
-
-  const _handleEdit = () => {
-    const pageRef = doc(db, "pages", props.pageSelected);
-    updateDoc(pageRef, { title: prompt("Name?") });
-    console.log(pageRef);
   };
 
   const showBinButton = (pageRef) => {
@@ -206,7 +195,11 @@ const Pages = (props) => {
                 >
                   <Typography
                     variant="h6"
-                    sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                    sx={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
                   >
                     {page.title}
                   </Typography>
