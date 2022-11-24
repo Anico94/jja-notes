@@ -192,7 +192,12 @@ export default function SearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        style={{
+          "background-image": "linear-gradient(to right, darkblue, darkred)",
+        }}
+      >
         <Toolbar>
           <IconButton
             size="large"
