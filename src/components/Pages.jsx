@@ -3,21 +3,9 @@ import "../MainMenu.css";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
-import BookIcon from "@mui/icons-material/Book";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { dividerClasses, IconButton } from "@mui/material";
-import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import { IconButton } from "@mui/material";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
-import Button from "@mui/material/Button";
 import { auth, db } from "../firebase-config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -28,18 +16,15 @@ import {
   where,
   addDoc,
   updateDoc,
-  orderBy,
   getDoc,
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import firebase from "firebase/compat/app";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Typography from "@mui/material/Typography";
 import EditIcon from "@mui/icons-material/Edit";
 
 const Pages = (props) => {
-  const [open, setOpen] = useState(true);
   const [user] = useAuthState(auth);
   const [q, setQ] = useState("");
   const [docs, setDocs] = useState([]);
@@ -62,7 +47,6 @@ const Pages = (props) => {
   };
 
   const fetchPages = async () => {
-    // console.log("Fetching pages with new ref:", props.notebookSelected);
     try {
       const pageQuery = query(
         collection(db, "pages"),
@@ -70,7 +54,6 @@ const Pages = (props) => {
       );
       setQ(pageQuery);
       const doc = await getDocs(pageQuery);
-      // console.log("docs from Pages:", doc.docs);
       setDocs(doc.docs);
     } catch (err) {
       console.log("still working");
@@ -80,26 +63,22 @@ const Pages = (props) => {
     fetchPages();
   }, [props.notebookSelected]);
 
-  // useEffect(() => {
   let pages = [];
   if (docs) {
-    const [docs, loading, error] = useCollectionData(q);
+    const [docs] = useCollectionData(q);
     pages = docs;
   }
-  // }, []);
 
   const askForPageName = () => {
     const name = prompt("What is the name of the page?", "Page Name");
-    console.log(name);
     return name;
   };
 
   const _handleAdd = async () => {
-    console.log("ADD PAGE CLICKED");
     // run a function to get the name of the page
     const pageName = askForPageName();
     try {
-      const docRef = await addDoc(collection(db, "pages"), {
+      await addDoc(collection(db, "pages"), {
         title: pageName ? pageName : `Page ${pages.length + 1}`,
         notebookRef: props.notebookSelected,
         notebookName: props.notebookName,

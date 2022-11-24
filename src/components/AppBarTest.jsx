@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -6,7 +6,6 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
@@ -20,6 +19,8 @@ import appLogo from "../assets/5.png";
 import "../AppBarTest.css";
 
 const Search = styled("div")(({ theme }) => ({
+  // Search bar functionality to come - placeholder.
+
   position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -61,11 +62,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const settings = ["Profile", "Logout"];
-
 export default function SearchAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -105,54 +103,12 @@ export default function SearchAppBar() {
   const generateDropdownItems = () => {
     getUser(user);
     if (!user) {
-      return (
-        <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar>{getUser(user)}</Avatar>
-            </IconButton>
-          </Tooltip>
-          <Menu
-            sx={{ mt: "45px" }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            <MenuItem key="Login" onClick={handleCloseUserMenu}>
-              <Typography
-                textAlign="center"
-                component={Link}
-                to={`/login`}
-                className="no-deco"
-              >
-                Log In
-              </Typography>
-            </MenuItem>
-            <MenuItem key="Signup" onClick={handleCloseUserMenu}>
-              <Typography
-                textAlign="center"
-                component={Link}
-                to={`/signup`}
-                className="no-deco"
-              >
-                Sign Up
-              </Typography>
-            </MenuItem>
-          </Menu>
-        </Box>
-      );
+      // If the user is not present/still loading, the following return block will run.
+      return <p>Loading...</p>;
     }
     return (
+      // This return block will run is the user is loaded.
+
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open user options">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -201,15 +157,6 @@ export default function SearchAppBar() {
         }}
       >
         <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
           <a href={`/home/${getUser(user)[1]}`}>
             <img src={appLogo} alt="App Logo" className="tiny-thumbnail" />
           </a>
@@ -230,6 +177,7 @@ export default function SearchAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          {/* Drop down items will be generated according to user login state. */}
           {generateDropdownItems()}
         </Toolbar>
       </AppBar>

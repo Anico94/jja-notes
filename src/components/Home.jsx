@@ -1,23 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Notebooks from "./Notebooks";
 import Pages from "./Pages";
-import StatusBar from "./StatusBar";
 import SearchAppBar from "./AppBarTest";
 import Notes from "./Notes";
 import Grow from "@mui/material/Grow";
 import "../Home.css";
 
 const Home = () => {
-  const [open, setOpen] = useState(true);
   const [openPages, setOpenPages] = useState(false);
   const [notebookSelected, setNotebookSelected] = useState("");
   const [previousNotebookSelected, setPreviousNotebookSelected] = useState("");
   const [pageSelected, setPageSelected] = useState("");
   const [notebookName, setNotebookName] = useState("");
-  const [pageName, setPageName] = useState("");
   const [lastEditNameTime, setLastEditNameTime] = useState(0);
-
-  const handleClick = () => {};
 
   const notebookOnClickWrapper = (notebookRef, notebookName) => {
     showPages();
@@ -25,13 +20,11 @@ const Home = () => {
   };
 
   const showPages = () => {
+    // This function controls the behaviour of opening/closing pages list.
+
     if (notebookSelected === previousNotebookSelected) {
-      console.log("notebookSelected", notebookSelected);
-      console.log("previous selected", previousNotebookSelected);
       setOpenPages(!openPages);
     } else {
-      console.log("notebookSelected", notebookSelected);
-      console.log("previous selected", previousNotebookSelected);
       setPreviousNotebookSelected(notebookSelected);
       setOpenPages(true);
     }
@@ -71,10 +64,10 @@ const Home = () => {
   };
 
   const fetchNotebookName = (notebookName) => {
+    // Still working on fetching notebook name.
     // setNotebookName(notebookName);
+    console.log(notebookName);
   };
-
-  // const containerRef = useRef(null);
 
   return (
     <div className="home-page">
@@ -104,7 +97,6 @@ const Home = () => {
           <Notes
             pageSelected={pageSelected}
             resetPage={resetPage}
-            // notebookName={notebookName}
             lastEditNameTime={lastEditNameTime}
           />
         </div>
