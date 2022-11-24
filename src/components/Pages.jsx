@@ -36,6 +36,7 @@ import {
 import firebase from "firebase/compat/app";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Typography from "@mui/material/Typography";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Pages = (props) => {
   const [open, setOpen] = useState(true);
@@ -115,18 +116,13 @@ const Pages = (props) => {
     }
   };
 
-  // -----------------
-
   const _handleEdit = async () => {
-    const pageRef = doc(db, "pages", props.pageSelected);
+    const pageRef = doc(db, "pages", pageSelected);
     const pageTitle = await getDoc(pageRef);
-    console.log(pageTitle.data());
-    // updateDoc(pageRef, {
-    //   title: prompt("New Name?", pageTitle.data().title),
-    // });
+    updateDoc(pageRef, {
+      title: prompt("New Name?", pageTitle.data().title),
+    });
   };
-
-  // --------------------
 
   const _deletePage = () => {
     if (confirm("Are you sure you want to delete this page?")) {
@@ -142,6 +138,15 @@ const Pages = (props) => {
         <div className="bin-button">
           <IconButton
             color="primary"
+            aria-label="edit"
+            component="label"
+            pageref={pageRef}
+            onClick={_handleEdit}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="error"
             aria-label="delete"
             component="label"
             pageref={pageRef}
@@ -186,11 +191,15 @@ const Pages = (props) => {
                   onClick={handleClick}
                   pageref={page.ref}
                   selected={page.ref === pageSelected}
-                  sx={{ width: 200 }}
+                  sx={{ width: 160 }}
                 >
                   <Typography
                     variant="h6"
-                    sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                    sx={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
                   >
                     {page.title}
                   </Typography>
