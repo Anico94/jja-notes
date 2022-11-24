@@ -8,14 +8,12 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { Box, Card, TextField } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import "../Profile.scss";
-import { async } from "@firebase/util";
+import Typography from "@mui/material/Typography";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -89,9 +87,9 @@ const ProfileEdit = () => {
         <div>
           <h1>Welcome Back {user.displayName}!</h1>
 
-          <Box sx={{ width: 800, height: 250, padding: 8 }}>
+          <Box sx={{ width: 800, height: 250, padding: 6 }}>
             <Grid container spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs={3.5}>
                 <Stack spacing={3}>
                   <div className="avatar_frame">
                     <div className="avatar_edit">
@@ -119,28 +117,46 @@ const ProfileEdit = () => {
                   </div>
                 </Stack>
               </Grid>
-              <Grid item xs={4}>
-                <Stack spacing={4}>
-                  <p>Name: </p>
+              <Grid item xs={8}>
+                <Box spacing={4}>
                   <form onSubmit={handleFormSubmit}>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      onChange={(e) => setUserName(e.target.value)}
-                      value={userName}
-                      placeholder={user.displayName}
-                    />
-                    <Button variant="contained" type="submit">
-                      update
-                    </Button>
+                    <Card sx={{ maxWidth: 400, height: 150, padding: 3 }}>
+                      <label>
+                        <Stack direction="row" spacing={2}>
+                          <Typography
+                            paragraph
+                            noWrap
+                            variant="subtitle1"
+                            component="div"
+                          >
+                            Name:
+                          </Typography>
+
+                          <input
+                            type="text"
+                            name="name"
+                            className="login__textBox"
+                            required
+                            onChange={(e) => setUserName(e.target.value)}
+                            value={userName}
+                            placeholder={user.displayName}
+                          />
+                        </Stack>
+                      </label>
+                    </Card>
+                    <div className="update_button">
+                      <Button variant="outlined" type="submit">
+                        update
+                      </Button>
+                    </div>
                   </form>
+
                   {/* <p>
                       Email: {user.email} (
                       {user.emailVerified ? "verified" : "unverified"})
                     </p> */}
                   {/* <input placeholder={user.email} /> */}
-                </Stack>
+                </Box>
               </Grid>
             </Grid>
           </Box>
