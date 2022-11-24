@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { auth, sendPasswordReset } from "../firebase-config";
 import logo from "../assets/1.png";
 import thumbnail from "../assets/2.png";
+import { Link } from "react-router-dom";
 
 const Reset = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +18,6 @@ const Reset = () => {
     <div className="login">
       <div className="login__container left">
         <img src={logo} alt="App Logo" className="logo" />
-        <h3>This can be the logo of the reset page</h3>
       </div>
       <div className="login__container right">
         <div className="login-info">
@@ -40,6 +40,9 @@ const Reset = () => {
           >
             Send password reset email
           </button>
+          <div>
+            Return to <Link to="/">Login</Link>
+          </div>
         </div>
       </div>
     </div>
