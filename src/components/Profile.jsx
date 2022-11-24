@@ -58,16 +58,20 @@ const Profile = () => {
         <div>
           <h1>Welcome Back {user.displayName}!</h1>
           <Stack spacing={3}>
-            <Card sx={{ padding: 10 }}>
+            <Card sx={{ padding: 4 }}>
               <Stack spacing={4}>
                 <Avatar src={avatarURL} sx={{ width: 150, height: 150 }} />
-                <p>Name: {user.displayName}</p>
                 <p>
-                  Email: {user.email} (
-                  {user.emailVerified ? "verified" : "unverified"})
+                  <span className="profile_title">Name: </span>
+                  {user.displayName}
                 </p>
                 <p>
-                  Last Logged In:{" "}
+                  <span className="profile_title">Email: </span>
+                  {user.email} ({user.emailVerified ? "verified" : "unverified"}
+                  )
+                </p>
+                <p>
+                  <span className="profile_title">Last Logged In: </span>
                   {Date(Date.parse(user.metadata.lastSignInTime))}
                 </p>
               </Stack>
@@ -77,12 +81,16 @@ const Profile = () => {
             {/* </Link> */}
           </Stack>
         </div>
-        <Button variant="outlined" onClick={_handleEdit}>
-          Edit
-        </Button>
-        <Button variant="outlined" onClick={_handleBack}>
-          Back
-        </Button>
+        <div className="update_button">
+          <Stack direction="row" spacing={2}>
+            <Button variant="outlined" onClick={_handleEdit}>
+              Edit
+            </Button>
+            <Button variant="outlined" onClick={_handleBack}>
+              Back
+            </Button>
+          </Stack>
+        </div>
       </div>
     );
   };
