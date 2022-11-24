@@ -25,7 +25,9 @@ const Profile = () => {
       navigate("/");
     }
   };
-  const avatarRef = ref(storage, `images/avatar/${user.uid}`);
+
+  const uid = window.location.href.split("/")[4];
+  const avatarRef = ref(storage, `images/avatar/${uid}`);
 
   useEffect(() => {
     getDownloadURL(avatarRef)
