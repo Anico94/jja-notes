@@ -14,6 +14,8 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import "../Profile.scss";
 import Typography from "@mui/material/Typography";
+import SaveIcon from "@mui/icons-material/Save";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -42,6 +44,11 @@ const ProfileEdit = () => {
     const imgInput = document.getElementById("imgInput");
     imgInput.click();
   };
+
+  const _handleBack = () => {
+    navigate(`/profile/${user?.uid}`);
+  };
+
   // image upload
   const handleImgChange = (e) => {
     setImageUpload(e.target.files[0]);
@@ -85,7 +92,7 @@ const ProfileEdit = () => {
     return (
       <div>
         <div>
-          <h1>Welcome Back {user.displayName}!</h1>
+          <h1 className="welcome-back">Welcome Back {user.displayName}!</h1>
 
           <Box sx={{ width: 800, height: 250, padding: 6 }}>
             <Grid container spacing={2}>
@@ -111,8 +118,22 @@ const ProfileEdit = () => {
                     </div>
                   </div>
                   <div className="avatar_upload">
-                    <Button variant="contained" onClick={uploadImage}>
-                      upload image
+                    <Button
+                      variant="contained"
+                      onClick={uploadImage}
+                      startIcon={<SaveIcon />}
+                    >
+                      Upload Image
+                    </Button>
+                  </div>
+                  <div className="back-button">
+                    <Button
+                      variant="contained"
+                      onClick={_handleBack}
+                      startIcon={<ArrowBackIcon />}
+                      // sx={{ mt: 1.5, mb: 1.5, ml: 1.5 }}
+                    >
+                      Back
                     </Button>
                   </div>
                 </Stack>
@@ -120,7 +141,7 @@ const ProfileEdit = () => {
               <Grid item xs={8}>
                 <Box spacing={4}>
                   <form onSubmit={handleFormSubmit}>
-                    <Card sx={{ maxWidth: 400, height: 150, padding: 3 }}>
+                    <Card sx={{ maxWidth: 400, height: 160, padding: 3 }}>
                       <label>
                         <Stack direction="row" spacing={2}>
                           <Typography
@@ -143,12 +164,17 @@ const ProfileEdit = () => {
                           />
                         </Stack>
                       </label>
+                      <div className="update_button">
+                        <Button
+                          variant="contained"
+                          type="submit"
+                          startIcon={<SaveIcon />}
+                          sx={{ mt: 3 }}
+                        >
+                          Update Name
+                        </Button>
+                      </div>
                     </Card>
-                    <div className="update_button">
-                      <Button variant="outlined" type="submit">
-                        update
-                      </Button>
-                    </div>
                   </form>
 
                   {/* <p>
@@ -179,12 +205,7 @@ const ProfileEdit = () => {
   return (
     <div className="home-page">
       <SearchAppBar className="search-app-bar" />
-      <div className="main-app">
-        <div className="main-menu">
-          <MainMenu />
-        </div>
-        <div className="main-app">{currentUserInfo(user)}</div>
-      </div>
+      <div className="profile-page">{currentUserInfo(user)}</div>
     </div>
   );
 };
