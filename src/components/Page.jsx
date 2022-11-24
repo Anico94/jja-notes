@@ -58,7 +58,9 @@ const Page = (props) => {
       </div>
       <div className={props.pageSelected ? "" : "hide-editor"}>
         <div className="page-buttons">
-          <h2 className="note-book-page">{`${"Notebook Name"} > ${"Page Name"}`}</h2>
+          <h2 className="note-book-page">{`${
+            props.notebookName
+          } > ${"Page Name"}`}</h2>
           <div className={isSaveHidden ? "save-hidden" : ""}>
             <Alert size="small" severity="success">
               Your document was saved.

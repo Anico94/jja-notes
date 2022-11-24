@@ -12,12 +12,14 @@ const Home = () => {
   const [notebookSelected, setNotebookSelected] = useState("");
   const [previousNotebookSelected, setPreviousNotebookSelected] = useState("");
   const [pageSelected, setPageSelected] = useState("");
+  const [notebookName, setNotebookName] = useState("");
+  const [pageName, setPageName] = useState("");
 
   const handleClick = () => {};
 
-  const notebookOnClickWrapper = (notebookRef) => {
+  const notebookOnClickWrapper = (notebookRef, notebookName) => {
     showPages();
-    fetchNotebookRef(notebookRef);
+    fetchNotebookRef(notebookRef, notebookName);
   };
 
   const showPages = () => {
@@ -37,14 +39,20 @@ const Home = () => {
     }
   };
 
-  const fetchNotebookRef = (notebookRef) => {
+  const fetchNotebookRef = (notebookRef, notebookName) => {
     console.log("NotebookRef collected:", notebookRef);
     if (notebookRef === undefined) {
       console.log("abandoning...");
       return;
     }
+
+    if (notebookName === undefined) {
+      return;
+    }
+
     console.log("setting", notebookRef);
     setNotebookSelected(notebookRef);
+    setNotebookName(notebookName);
   };
 
   const fetchPageRef = (pageRef) => {
@@ -78,7 +86,11 @@ const Home = () => {
           />
         </div>
         <div className="main-app">
-          <Notes pageSelected={pageSelected} resetPage={resetPage} />
+          <Notes
+            pageSelected={pageSelected}
+            resetPage={resetPage}
+            notebookName={notebookName}
+          />
         </div>
       </div>
     </div>
