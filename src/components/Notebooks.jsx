@@ -137,7 +137,7 @@ const Notebooks = (props) => {
 
   return (
     <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      sx={{ width: 240, bgcolor: "background.paper" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
@@ -168,8 +168,18 @@ const Notebooks = (props) => {
                   notebookref={notebook.ref}
                   notebookname={notebook.title}
                   selected={notebook.ref === props.selected}
+                  sx={{ width: 200 }}
                 >
-                  <ListItemText primary={notebook.title} />
+                  {/* <ListItemText
+                    primary={notebook.title}
+                    className="notebook-name-text"
+                  /> */}
+                  <Typography
+                    variant="h6"
+                    sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                  >
+                    {notebook.title}
+                  </Typography>
                 </ListItemButton>
               </div>
               {showBinButton(notebook.ref)}
