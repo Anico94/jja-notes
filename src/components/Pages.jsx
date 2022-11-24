@@ -120,10 +120,10 @@ const Pages = (props) => {
   const _handleEdit = async () => {
     const pageRef = doc(db, "pages", props.pageSelected);
     const pageTitle = await getDoc(pageRef);
-    console.log();
-    updateDoc(pageRef, {
-      title: prompt("New Name?", pageTitle.data().title),
-    });
+    console.log(pageTitle.data());
+    // updateDoc(pageRef, {
+    //   title: prompt("New Name?", pageTitle.data().title),
+    // });
   };
 
   // --------------------
