@@ -3,6 +3,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import parse from "html-react-parser";
 import "../Page.css";
 import Button from "@mui/material/Button";
+import SaveIcon from "@mui/icons-material/Save";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import {
   collection,
@@ -47,15 +48,7 @@ const Page = (props) => {
     setIsSaveHidden(false);
     setTimeout(() => {
       setIsSaveHidden(true);
-    }, 2000);
-  };
-
-  const _deletePage = () => {
-    if (confirm("Are you sure you want to delete this page?")) {
-      const pageRef = doc(db, "pages", props.pageSelected);
-      deleteDoc(pageRef);
-      props.resetPage();
-    }
+    }, 3000);
   };
 
   return (
@@ -65,17 +58,20 @@ const Page = (props) => {
       </div>
       <div className={props.pageSelected ? "" : "hide-editor"}>
         <div className="page-buttons">
-          <Button variant="outlined" size="small" onClick={_savePage}>
-            Save
-          </Button>
-          <Button variant="outlined" size="small" onClick={_deletePage}>
-            Delete
-          </Button>
+          <h2 className="note-book-page">{`${"Notebook Name"} > ${"Page Name"}`}</h2>
           <div className={isSaveHidden ? "save-hidden" : ""}>
             <Alert size="small" severity="success">
               Your document was saved.
             </Alert>
           </div>
+          <Button
+            sx={{ mt: 1.5, mb: 1.5 }}
+            variant="contained"
+            onClick={_savePage}
+            startIcon={<SaveIcon />}
+          >
+            Save
+          </Button>
         </div>
         <Editor
           apiKey={process.env.REACT_APP_TINY_API_KEY}
