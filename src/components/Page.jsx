@@ -32,10 +32,14 @@ const Page = (props) => {
 
   useEffect(() => {
     if (props.pageSelected !== "") {
+      console.log("Time: ", props.lastEditNameTime);
       const pageRef = collection(db, "pages");
       const singlePage = query(pageRef, where("ref", "==", props.pageSelected));
       const getObject = async () => {
         const document = await getDocs(singlePage);
+        console.log(
+          document._snapshot.docChanges[0].doc.data.value.mapValue.fields
+        );
         setContent(
           document._snapshot.docChanges[0].doc.data.value.mapValue.fields
             .content.stringValue
@@ -51,7 +55,7 @@ const Page = (props) => {
       };
       getObject();
     }
-  }, [props.pageSelected]);
+  }, [props.pageSelected, props.lastEditNameTime]);
 
   const _savePage = () => {
     setContent(editorRef.current.getContent());
