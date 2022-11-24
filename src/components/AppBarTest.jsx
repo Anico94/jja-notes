@@ -197,7 +197,7 @@ export default function SearchAppBar() {
       <AppBar
         position="static"
         style={{
-          "background-image": "linear-gradient(to right, darkblue, darkred)",
+          backgroundImage: "linear-gradient(to right, darkblue, darkred)",
         }}
       >
         <Toolbar>

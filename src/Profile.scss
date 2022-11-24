@@ -13,14 +13,23 @@
   bottom: 0px;
   right: 0px;
 }
-.avatar_upload {
-  width: 150px;
-  padding-left: 6px;
+.avatar_upload,
+.back-button {
+  width: 170px;
+  // padding-left: 6px;
 }
-.update_button {
-  margin-top: 24px;
+.update_button,
+.back-button {
+  // margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .profile_title {
   font-size: 20px;
   font-weight: 500;
+}
+
+.welcome-back {
+  text-align: center;
 }
