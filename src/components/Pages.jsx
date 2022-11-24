@@ -100,6 +100,7 @@ const Pages = (props) => {
       const docRef = await addDoc(collection(db, "pages"), {
         title: pageName ? pageName : `Page ${pages.length + 1}`,
         notebookRef: props.notebookSelected,
+        notebookName: props.notebookName,
         users: [user.uid],
         content: "<h1>Title<h1>",
         createdAt: Date.now(),
