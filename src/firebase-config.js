@@ -1,8 +1,4 @@
-// Import the functions you need from the SDKs you need
-
-import firebase from "firebase/compat/app";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import {
   getFirestore,
   collection,
@@ -10,7 +6,6 @@ import {
   where,
   query,
   getDocs,
-  docs,
   updateDoc,
 } from "firebase/firestore";
 
@@ -27,14 +22,6 @@ import {
 
 import { getStorage } from "firebase/storage";
 
-// TODO: Add SDKs for Firebase products that you want to use
-
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_API_KEY}`,
   authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
@@ -48,12 +35,8 @@ const firebaseConfig = {
 // Initialize Firebase
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
 const db = getFirestore(app);
-
 const auth = getAuth();
-
 const storage = getStorage(app);
 
 // Sign up
@@ -71,12 +54,9 @@ const signUp = async (email, password, name) => {
       name: name,
       authProvider: "local",
       email: user.email,
-      // documentID: user.documentID,
     }).then(function (docRef) {
-      console.log("Document written with ID: ", docRef.id);
       updateDoc(docRef, { ref: docRef.id });
     });
-    console.log("Sign up successful");
     return [true, user.uid];
   } catch (error) {
     alert("Sign up FAILED:", error.message);
@@ -94,7 +74,6 @@ const signIn = async (email, password) => {
       password
     );
     const user = userCredential.user;
-    console.log("Signed in as:", user.email);
     return [true, user];
   } catch (error) {
     alert(`Log In FAILED: ${error.message}`);
@@ -107,10 +86,8 @@ const signIn = async (email, password) => {
 const logOut = async () => {
   try {
     await signOut(auth);
-    console.log("Signed out");
     return true;
   } catch (error) {
-    console.log("Sign out failed successfully");
     return false;
   }
 };
@@ -118,11 +95,6 @@ const logOut = async () => {
 // Google login
 
 const googleProvider = new GoogleAuthProvider();
-//make user choose their google accounts if they have several
-// googleProvider.setCustomParameters({
-//   prompt: "select_account",
-// });
-
 const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
@@ -136,12 +108,10 @@ const signInWithGoogle = async () => {
         authProvider: "google",
         email: user.email,
       }).then(function (docRef) {
-        console.log("Document written with ID: ", docRef.id);
         updateDoc(docRef, { ref: docRef.id });
       });
     }
   } catch (error) {
-    console.log(error);
     alert(error.message);
   }
 };
@@ -151,20 +121,15 @@ const sendPasswordReset = async (email) => {
     await sendPasswordResetEmail(auth, email);
     alert("Password reset link sent");
   } catch (error) {
-    console.error(error);
     alert(error.message);
   }
 };
 const changeUserName = async (name) => {
   await updateProfile(auth.currentUser, {
     displayName: name,
-  })
-    .then(() => {
-      console.log("profile update success");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  }).catch((error) => {
+    console.log(error);
+  });
 };
 export {
   auth,

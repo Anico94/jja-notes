@@ -1,32 +1,23 @@
-import { auth, logOut, storage } from "../firebase-config";
-import { useNavigate, Link } from "react-router-dom";
+import { auth, storage } from "../firebase-config";
+import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SearchAppBar from "./AppBarTest";
-import MainMenu from "./Notebooks";
 import { useState, useEffect } from "react";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
+import { ref, getDownloadURL } from "firebase/storage";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import BookIcon from "@mui/icons-material/Book";
 
 import { Card } from "@mui/material";
 
 const Profile = () => {
   const navigate = useNavigate();
-  //   const [currentUser, setCurrentUser] = useState();
   const [user] = useAuthState(auth);
   const avatarDeafult =
     "https://firebasestorage.googleapis.com/v0/b/jja-notes.appspot.com/o/images%2Favatar%2FavatarDefault.png?alt=media&token=2beea97a-6301-4a96-afed-fc4f69db3b4a";
   const [avatarURL, setAvatarURL] = useState(avatarDeafult);
-  const handleLogout = async () => {
-    const res = await logOut();
-    console.log(res);
-    if (res) {
-      navigate("/");
-    }
-  };
 
   const uid = window.location.href.split("/")[4];
   const avatarRef = ref(storage, `images/avatar/${uid}`);
@@ -78,13 +69,9 @@ const Profile = () => {
                 </p>
               </Stack>
             </Card>
-
-            {/* <Link to="/profile/:uid/edit"> */}
-            {/* </Link> */}
           </Stack>
         </div>
         <div className="update_button">
-          {/* <Stack direction="row" spacing={2}> */}
           <Button
             variant="contained"
             onClick={_handleEdit}
@@ -96,12 +83,11 @@ const Profile = () => {
           <Button
             variant="contained"
             onClick={_handleBack}
-            startIcon={<ArrowBackIcon />}
+            startIcon={<BookIcon />}
             sx={{ mt: 1.5, mb: 1.5, ml: 1.5 }}
           >
-            Back
+            Go To Notes
           </Button>
-          {/* </Stack> */}
         </div>
       </div>
     );

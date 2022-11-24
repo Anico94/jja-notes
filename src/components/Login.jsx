@@ -10,18 +10,14 @@ import "../Login.scss";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
-  const [loadingMessage, setLoadingMessage] = useState("");
-  //   const [logInError, setLogInError] = useState("");
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (loading) {
-      //   setLoadingMessage("Loading.......");
       return;
     }
     if (user) navigate(`/home/${user.uid}`);
-    console.log(user, loading, error);
   }, [user, loading]);
 
   const handleSubmit = async (e) => {
@@ -29,10 +25,6 @@ const Login = () => {
     setEmail("");
     setPassword("");
     await signIn(email, password);
-    // if (res[0]) {
-    //     navigate(`/profile/${res[1].uid}`);
-    // }
-    // if (res.error) setLogInError(res.error);
   };
 
   return (
@@ -43,8 +35,7 @@ const Login = () => {
       <div className="login__container right">
         <div className="login-info">
           <img src={thumbnail} alt="App Thumbnail" className="thumbnail" />
-          <h2>Log In</h2>
-          {/* {error ? <div>{error}</div> : null} */}
+          <h2>Login</h2>
           <div>
             <form onSubmit={handleSubmit}>
               <input
@@ -63,7 +54,7 @@ const Login = () => {
                 placeholder="Your Password"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <input type="submit" value="Log In" className="login__btn" />
+              <input type="submit" value="Login" className="login__btn" />
             </form>
             <button
               className="login__btn login__google"

@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import parse from "html-react-parser";
 import "../Page.css";
 import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
-import {
-  useCollectionData,
-  useDocumentData,
-} from "react-firebase-hooks/firestore";
 import {
   collection,
   getDocs,
@@ -15,13 +10,10 @@ import {
   updateDoc,
   where,
   doc,
-  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase-config";
 import watermark from "../assets/3.png";
-import { async } from "@firebase/util";
 import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
 
 const Page = (props) => {
   const [content, setContent] = useState("<h1>This is a title</h1>");
@@ -32,14 +24,10 @@ const Page = (props) => {
 
   useEffect(() => {
     if (props.pageSelected !== "") {
-      console.log("Time: ", props.lastEditNameTime);
       const pageRef = collection(db, "pages");
       const singlePage = query(pageRef, where("ref", "==", props.pageSelected));
       const getObject = async () => {
         const document = await getDocs(singlePage);
-        console.log(
-          document._snapshot.docChanges[0].doc.data.value.mapValue.fields
-        );
         setContent(
           document._snapshot.docChanges[0].doc.data.value.mapValue.fields
             .content.stringValue
@@ -64,7 +52,7 @@ const Page = (props) => {
     setIsSaveHidden(false);
     setTimeout(() => {
       setIsSaveHidden(true);
-    }, 3000);
+    }, 2000);
   };
 
   return (
