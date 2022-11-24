@@ -29,6 +29,7 @@ import {
   addDoc,
   updateDoc,
   orderBy,
+  getDoc,
   doc,
   deleteDoc,
 } from "firebase/firestore";
@@ -113,6 +114,19 @@ const Pages = (props) => {
       console.log(err);
     }
   };
+
+  // -----------------
+
+  const _handleEdit = async () => {
+    const pageRef = doc(db, "pages", props.pageSelected);
+    const pageTitle = await getDoc(pageRef);
+    console.log();
+    updateDoc(pageRef, {
+      title: prompt("New Name?", pageTitle.data().title),
+    });
+  };
+
+  // --------------------
 
   const _deletePage = () => {
     if (confirm("Are you sure you want to delete this page?")) {
