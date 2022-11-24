@@ -9,43 +9,11 @@ const Notes = (props) => {
       <Page
         pageSelected={props.pageSelected}
         resetPage={props.resetPage}
-        notebookName={props.notebookName}
+        // notebookName={props.notebookName}
+        lastEditNameTime={props.lastEditNameTime}
       />
     </div>
   );
 };
 
 export default Notes;
-
-{
-  /* <div className="notes-container">
-      <div className="temp-box">
-        <Box sx={{ width: 600 }}>
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-        </Box>
-      </div>
-      <div className="temp-box">
-        <Box sx={{ width: 600 }}>
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-        </Box>
-      </div>
-      <div className="temp-box">
-        <Box sx={{ width: 600 }}>
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-        </Box>
-      </div>
-      <div className="temp-box">
-        <Box sx={{ width: 600 }}>
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-        </Box>
-      </div>
-    </div> */
-}

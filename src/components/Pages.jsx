@@ -121,6 +121,9 @@ const Pages = (props) => {
     const pageTitle = await getDoc(pageRef);
     updateDoc(pageRef, {
       title: prompt("New Name?", pageTitle.data().title),
+    }).then(() => {
+      props.editNameTime();
+      console.log("edited time");
     });
   };
 

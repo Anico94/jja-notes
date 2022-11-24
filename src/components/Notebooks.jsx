@@ -25,6 +25,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  writeBatch,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -50,18 +51,12 @@ const Notebooks = (props) => {
 
   const handleClick = (e) => {
     // console.log(e.target);
-    props.onClick(
-      e.target.offsetParent.attributes.notebookref?.nodeValue,
-      e.target.offsetParent.attributes.notebookname?.nodeValue
-    );
+    props.onClick(e.target.offsetParent.attributes.notebookref?.nodeValue);
   };
 
   const handleClickDiv = (e) => {
     // console.log(e.target);
-    props.onClick(
-      e.target.attributes.notebookref?.nodeValue,
-      e.target.attributes.notebookname?.nodeValue
-    );
+    props.onClick(e.target.attributes.notebookref?.nodeValue);
   };
 
   const fetchNotebooks = async () => {
@@ -123,10 +118,25 @@ const Notebooks = (props) => {
     const notebookRef = doc(db, "notebooks", props.selected);
 
     const notebookTitle = await getDoc(notebookRef);
+    const newName = prompt("New Name?", notebookTitle.data().title);
     console.log();
     updateDoc(notebookRef, {
-      title: prompt("New Name?", notebookTitle.data().title),
+      title: newName,
+    }).then(() => {
+      props.editNameTime();
+      updateAllRelevantPages(newName);
     });
+  };
+
+  const updateAllRelevantPages = async (newName) => {
+    console.log(newName);
+    // const batch = writeBatch(db);
+    // const pagesRef = query(
+    //   collection(db, "pages"),
+    //   where("notebookRef", "==", props.selected)
+    // );
+    // batch.update(pagesRef, { notebookName: newName });
+    // await batch.commit();
   };
 
   const showBinButton = (notebookRef, notebookTitle) => {
