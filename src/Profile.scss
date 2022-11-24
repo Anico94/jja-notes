@@ -1,0 +1,19 @@
+.avatar_frame {
+  width: 150px;
+  height: 150px;
+
+  position: relative;
+}
+.avatar_edit {
+  position: absolute;
+}
+
+.edit_button {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+.avatar_upload {
+  width: 150px;
+  padding-left: 6px;
+}
