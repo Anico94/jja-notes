@@ -197,7 +197,11 @@ const Notebooks = (props) => {
                   /> */}
                   <Typography
                     variant="h6"
-                    sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                    sx={{
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
                   >
                     {notebook.title}
                   </Typography>
