@@ -6,7 +6,11 @@ import Page from "./Page";
 const Notes = (props) => {
   return (
     <div className="page-container">
-      <Page pageSelected={props.pageSelected} resetPage={props.resetPage} />
+      <Page
+        pageSelected={props.pageSelected}
+        resetPage={props.resetPage}
+        notebookName={props.notebookName}
+      />
     </div>
   );
 };

@@ -64,7 +64,7 @@ const Pages = (props) => {
     try {
       const pageQuery = query(
         collection(db, "pages"),
-        where("notebookRef", "==", props.notebookSelected.slice(1))
+        where("notebookRef", "==", props.notebookSelected)
       );
       setQ(pageQuery);
       const doc = await getDocs(pageQuery);
@@ -99,7 +99,7 @@ const Pages = (props) => {
     try {
       const docRef = await addDoc(collection(db, "pages"), {
         title: pageName ? pageName : `Page ${pages.length + 1}`,
-        notebookRef: props.notebookSelected.slice(1),
+        notebookRef: props.notebookSelected,
         users: [user.uid],
         content: "<h1>Title<h1>",
         createdAt: Date.now(),
