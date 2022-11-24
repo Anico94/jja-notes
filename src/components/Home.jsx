@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Notebooks from "./Notebooks";
 import Pages from "./Pages";
 import StatusBar from "./StatusBar";
 import SearchAppBar from "./AppBarTest";
 import Notes from "./Notes";
+import Grow from "@mui/material/Grow";
 import "../Home.css";
 
 const Home = () => {
@@ -24,23 +25,19 @@ const Home = () => {
   };
 
   const showPages = () => {
-    if (notebookSelected === "") {
-      setOpenPages(false);
-    }
-
     if (notebookSelected === previousNotebookSelected) {
-      // console.log("notebookSelected", notebookSelected);
-      // console.log("previous selected", previousNotebookSelected);
+      console.log("notebookSelected", notebookSelected);
+      console.log("previous selected", previousNotebookSelected);
       setOpenPages(!openPages);
     } else {
-      // console.log("notebookSelected", notebookSelected);
-      // console.log("previous selected", previousNotebookSelected);
+      console.log("notebookSelected", notebookSelected);
+      console.log("previous selected", previousNotebookSelected);
       setPreviousNotebookSelected(notebookSelected);
-      // setOpenPages(true);
+      setOpenPages(true);
     }
   };
 
-  const fetchNotebookRef = (notebookRef) => {
+  const fetchNotebookRef = (notebookRef, notebookName) => {
     console.log("NotebookRef collected:", notebookRef);
     if (notebookRef === undefined) {
       console.log("abandoning...");
@@ -53,6 +50,7 @@ const Home = () => {
 
     console.log("setting", notebookRef);
     setNotebookSelected(notebookRef);
+    setNotebookName(notebookName);
   };
 
   const fetchPageRef = (pageRef) => {
@@ -73,8 +71,10 @@ const Home = () => {
   };
 
   const fetchNotebookName = (notebookName) => {
-    setNotebookName(notebookName);
+    // setNotebookName(notebookName);
   };
+
+  // const containerRef = useRef(null);
 
   return (
     <div className="home-page">
@@ -89,15 +89,17 @@ const Home = () => {
             fetchNotebookName={fetchNotebookName}
           />
         </div>
-        <div className="main-menu" hidden={!openPages}>
-          <Pages
-            notebookSelected={notebookSelected}
-            notebookName={notebookName}
-            onClick={fetchPageRef}
-            resetPage={resetPage}
-            editNameTime={editNameTime}
-          />
-        </div>
+        <Grow in={openPages} style={{ transformOrigin: "0 0 0" }}>
+          <div className="main-menu" hidden={!openPages}>
+            <Pages
+              notebookSelected={notebookSelected}
+              notebookName={notebookName}
+              onClick={fetchPageRef}
+              resetPage={resetPage}
+              editNameTime={editNameTime}
+            />
+          </div>
+        </Grow>
         <div className="main-app">
           <Notes
             pageSelected={pageSelected}
