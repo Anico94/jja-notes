@@ -34,12 +34,14 @@ Application has been deployed with firebase and can be found at https://jja-note
 - The editor will update the database without the user having to save the document
 - Add close and open drag tabs to the notebooks and pages so that the user can have the full page for the notes.
 - Allow user to reorder the notebooks and pages.
+- Add search functionality
 
 ## Known Issues
 
 - Clicking on the same notebook requires a double click to hide the pages tabs
 - Heading above the page editor doesn't change when the notebook name is edited. This still requires fixing.
 - Page and Notebook ordering is base on unique identifiers not base on how the user would like them ordered.
+- search field does not work
 
 ## Acknowledgements
 
