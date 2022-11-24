@@ -142,7 +142,7 @@ const Pages = (props) => {
 
   return (
     <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+      sx={{ width: 240, bgcolor: "background.paper" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
@@ -172,8 +172,14 @@ const Pages = (props) => {
                   onClick={handleClick}
                   pageref={page.ref}
                   selected={page.ref === pageSelected}
+                  sx={{ width: 200 }}
                 >
-                  <ListItemText primary={page.title} />
+                  <Typography
+                    variant="h6"
+                    sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                  >
+                    {page.title}
+                  </Typography>
                 </ListItemButton>
               </div>
               {showBinButton(page.ref)}
