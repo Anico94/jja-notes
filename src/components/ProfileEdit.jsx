@@ -1,8 +1,7 @@
-import { auth, logOut, storage, changeUserName } from "../firebase-config";
+import { auth, storage, changeUserName } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SearchAppBar from "./AppBarTest";
-import MainMenu from "./Notebooks";
 import { useEffect, useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Avatar from "@mui/material/Avatar";
@@ -19,20 +18,12 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
-  //   const [currentUser, setCurrentUser] = useState();
   const [user] = useAuthState(auth);
   const [imageUpload, setImageUpload] = useState(null);
   const [imageDisplay, setImageDisplay] = useState(null);
   const [avatar, setAvatar] = useState(null);
   const [userName, setUserName] = useState("");
 
-  const handleLogout = async () => {
-    const res = await logOut();
-    console.log(res);
-    if (res) {
-      navigate("/");
-    }
-  };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -176,12 +167,6 @@ const ProfileEdit = () => {
                       </div>
                     </Card>
                   </form>
-
-                  {/* <p>
-                      Email: {user.email} (
-                      {user.emailVerified ? "verified" : "unverified"})
-                    </p> */}
-                  {/* <input placeholder={user.email} /> */}
                 </Box>
               </Grid>
             </Grid>

@@ -3,17 +3,7 @@ import "../MainMenu.css";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
 import BookIcon from "@mui/icons-material/Book";
-import DescriptionIcon from "@mui/icons-material/Description";
 import { auth, db } from "../firebase-config";
 import {
   query,
@@ -25,32 +15,24 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  writeBatch,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { IconButton } from "@mui/material";
-import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
-import Button from "@mui/material/Button";
-import firebase from "firebase/compat/app";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import Box from "@mui/material/Box";
-import Popper from "@mui/material/Popper";
 import Typography from "@mui/material/Typography";
 import EditIcon from "@mui/icons-material/Edit";
 // web.cjs is required for IE11 support
 
 const Notebooks = (props) => {
-  const [open, setOpen] = useState(true);
   const [user] = useAuthState(auth);
-  const [notebookRefs, setNotebookRefs] = useState([]);
   const [docs, setDocs] = useState([]);
-  // const [notebooks, setNotebooks] = useState([]);
   const [q, setQ] = useState("");
 
   const handleClick = (e) => {
-    // console.log(e.target);
+    // called when user clicks on the name of the notebooks only.
+
     props.onClick(
       e.target.offsetParent.attributes.notebookref?.nodeValue,
       e.target.offsetParent.attributes.notebookname?.nodeValue
@@ -58,7 +40,8 @@ const Notebooks = (props) => {
   };
 
   const handleClickDiv = (e) => {
-    // console.log(e.target);
+    // call when user clicks on either the name of the notebooks or the whitespace around it.
+
     props.onClick(
       e.target.attributes.notebookref?.nodeValue,
       e.target.attributes.notebookname?.nodeValue
@@ -82,15 +65,13 @@ const Notebooks = (props) => {
     fetchNotebooks();
   }, [user]);
 
-  // useEffect(() => {
   let notebooks = [];
   if (docs) {
-    const [docs, loading, error] = useCollectionData(q);
+    const [docs] = useCollectionData(q);
     notebooks = docs;
   }
-  // }, []);
 
-  //function to get the notbook name
+  // function to get the notebook name
   const askForNotebookName = () => {
     const name = prompt("What is the name of the notebook?", "Notebook Name");
     return name;
@@ -99,14 +80,13 @@ const Notebooks = (props) => {
   const _handleAdd = async () => {
     const notebookName = askForNotebookName();
     try {
-      const docRef = await addDoc(collection(db, "notebooks"), {
+      await addDoc(collection(db, "notebooks"), {
         title: notebookName ? notebookName : `Notebook ${notebooks.length + 1}`,
         users: [user.uid],
         createdAt: Date.now(),
         modifiedAt: Date.now(),
       }).then(function (docRef) {
-        console.log("Document written with ID: ", docRef.id);
-        updateDoc(docRef, { ref: docRef.id });
+        updateDoc(docRef, { ref: docRef.id }); // attaching ref as a field to itself
       });
     } catch (err) {
       console.log(err);
@@ -122,7 +102,6 @@ const Notebooks = (props) => {
 
   const _handleEdit = async () => {
     const notebookRef = doc(db, "notebooks", props.selected);
-
     const notebookTitle = await getDoc(notebookRef);
     const newName = prompt("New Name?", notebookTitle.data().title);
     console.log();
@@ -135,17 +114,12 @@ const Notebooks = (props) => {
   };
 
   const updateAllRelevantPages = async (newName) => {
+    // Work in progress
+
     console.log(newName);
-    // const batch = writeBatch(db);
-    // const pagesRef = query(
-    //   collection(db, "pages"),
-    //   where("notebookRef", "==", props.selected)
-    // );
-    // batch.update(pagesRef, { notebookName: newName });
-    // await batch.commit();
   };
 
-  const showBinButton = (notebookRef, notebookTitle) => {
+  const showBinButton = (notebookRef) => {
     if (notebookRef === props.selected) {
       return (
         <div className="bin-button">
@@ -201,16 +175,11 @@ const Notebooks = (props) => {
               <div onClick={handleClickDiv} className="notebook-titles">
                 <ListItemButton
                   onClick={handleClick}
-                  // key={notebook.ref}
                   notebookref={notebook.ref}
                   notebookname={notebook.title}
                   selected={notebook.ref === props.selected}
                   sx={{ width: 160 }}
                 >
-                  {/* <ListItemText
-                    primary={notebook.title}
-                    className="notebook-name-text"
-                  /> */}
                   <Typography
                     variant="h6"
                     sx={{
