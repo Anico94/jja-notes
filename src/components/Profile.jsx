@@ -8,6 +8,8 @@ import { ref, getDownloadURL, listAll } from "firebase/storage";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import EditIcon from "@mui/icons-material/Edit";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import { Card } from "@mui/material";
 
@@ -82,14 +84,24 @@ const Profile = () => {
           </Stack>
         </div>
         <div className="update_button">
-          <Stack direction="row" spacing={2}>
-            <Button variant="outlined" onClick={_handleEdit}>
-              Edit
-            </Button>
-            <Button variant="outlined" onClick={_handleBack}>
-              Back
-            </Button>
-          </Stack>
+          {/* <Stack direction="row" spacing={2}> */}
+          <Button
+            variant="contained"
+            onClick={_handleEdit}
+            startIcon={<EditIcon />}
+            sx={{ mt: 1.5, mb: 1.5 }}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="contained"
+            onClick={_handleBack}
+            startIcon={<ArrowBackIcon />}
+            sx={{ mt: 1.5, mb: 1.5, ml: 1.5 }}
+          >
+            Back
+          </Button>
+          {/* </Stack> */}
         </div>
       </div>
     );
@@ -98,12 +110,7 @@ const Profile = () => {
   return (
     <div className="home-page">
       <SearchAppBar className="search-app-bar" />
-      <div className="main-app">
-        <div className="main-menu">
-          <MainMenu />
-        </div>
-        <div className="main-app">{currentUserInfo(user)}</div>
-      </div>
+      <div className="profile-page">{currentUserInfo(user)}</div>
     </div>
   );
 };

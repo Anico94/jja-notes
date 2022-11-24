@@ -17,6 +17,11 @@
   padding: 10px;
 }
 
+.profile-page {
+  display: flex;
+  justify-content: center;
+}
+
 .menu-actions {
   display: flex;
   justify-content: space-between;
