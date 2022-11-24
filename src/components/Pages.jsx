@@ -35,6 +35,7 @@ import {
 import firebase from "firebase/compat/app";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Typography from "@mui/material/Typography";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Pages = (props) => {
   const [open, setOpen] = useState(true);
@@ -122,12 +123,27 @@ const Pages = (props) => {
     }
   };
 
+  const _handleEdit = () => {
+    const pageRef = doc(db, "pages", props.pageSelected);
+    updateDoc(pageRef, { title: prompt("Name?") });
+    console.log(pageRef);
+  };
+
   const showBinButton = (pageRef) => {
     if (pageRef === pageSelected) {
       return (
         <div className="bin-button">
           <IconButton
             color="primary"
+            aria-label="edit"
+            component="label"
+            pageref={pageRef}
+            onClick={_handleEdit}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="error"
             aria-label="delete"
             component="label"
             pageref={pageRef}
@@ -172,7 +188,7 @@ const Pages = (props) => {
                   onClick={handleClick}
                   pageref={page.ref}
                   selected={page.ref === pageSelected}
-                  sx={{ width: 200 }}
+                  sx={{ width: 160 }}
                 >
                   <Typography
                     variant="h6"
