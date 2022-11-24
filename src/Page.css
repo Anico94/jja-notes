@@ -10,6 +10,8 @@
   display: flex;
   padding-top: 10px;
   padding-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .watermark {
@@ -19,4 +21,8 @@
 .save-hidden {
   display: none;
   padding: 0;
+}
+
+.note-book-page {
+  margin: 5px;
 }
