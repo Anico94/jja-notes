@@ -1,6 +1,7 @@
 # JJA NOTES
 
 ![Home Page](/src/assets/readme1.png "Home Page")
+![Home Page](/src/assets/readme2.png "Home Page")
 
 ## Note Taking Web Application
 
@@ -25,6 +26,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Deployment
 
 Application has been deployed with firebase and can be found at https://jja-notes.firebaseapp.com/
+
+## Future Plans
+
+- Profile page will allow users to add collaborators
+- These collaborators will be able to share notebooks and pages
+- The editor will update the database without the user having to save the document
+- Add close and open drag tabs to the notebooks and pages so that the user can have the full page for the notes.
+- Allow user to reorder the notebooks and pages.
+
+## Known Issues
+
+- Clicking on the same notebook requires a double click to hide the pages tabs
+- Heading above the page editor doesn't change when the notebook name is edited. This still requires fixing.
+- Page and Notebook ordering is base on unique identifiers not base on how the user would like them ordered.
 
 ## Acknowledgements
 
