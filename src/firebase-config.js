@@ -22,6 +22,7 @@ import {
   sendPasswordResetEmail,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 
 import { getStorage } from "firebase/storage";
@@ -154,7 +155,17 @@ const sendPasswordReset = async (email) => {
     alert(error.message);
   }
 };
-
+const changeUserName = async (name) => {
+  await updateProfile(auth.currentUser, {
+    displayName: name,
+  })
+    .then(() => {
+      console.log("profile update success");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 export {
   auth,
   db,
@@ -164,4 +175,5 @@ export {
   signIn,
   logOut,
   sendPasswordReset,
+  changeUserName,
 };

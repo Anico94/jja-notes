@@ -1,26 +1,21 @@
-import { auth, logOut, storage } from "../firebase-config";
+import { auth, logOut, storage, changeUserName } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SearchAppBar from "./AppBarTest";
 import MainMenu from "./Notebooks";
 import { useEffect, useState } from "react";
-import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { Box, Card, TextField } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import Fab from "@mui/material/Fab";
-import NavigationIcon from "@mui/icons-material/Navigation";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
-
 import Paper from "@mui/material/Paper";
-
 import "../Profile.scss";
-import { height } from "@mui/system";
+import { async } from "@firebase/util";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -38,13 +33,14 @@ const ProfileEdit = () => {
       navigate("/");
     }
   };
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleChange = (e) => {
-    setUserName(e.target.value);
+    await changeUserName(userName);
+    navigate(`/profile/${user.uid}`);
   };
-
+  //upload button click the input
   const _handleClick = () => {
-    console.log("imageclick");
     const imgInput = document.getElementById("imgInput");
     imgInput.click();
   };
@@ -68,7 +64,6 @@ const ProfileEdit = () => {
 
   //image show
   const avatarRef = ref(storage, `images/avatar/${uid}`);
-  console.log(avatarRef);
 
   useEffect(() => {
     getDownloadURL(avatarRef)
@@ -77,21 +72,11 @@ const ProfileEdit = () => {
       })
       .catch((error) => {
         console.log(error);
-        setAvatar([
-          "https://firebasestorage.googleapis.com/v0/b/jja-notes.appspot.com/o/images%2Favatar%2FavatarDefault.png?alt=media&token=2beea97a-6301-4a96-afed-fc4f69db3b4a",
-        ]);
+        setAvatar(
+          "https://firebasestorage.googleapis.com/v0/b/jja-notes.appspot.com/o/images%2Favatar%2FavatarDefault.png?alt=media&token=2beea97a-6301-4a96-afed-fc4f69db3b4a"
+        );
       });
   }, []);
-
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    width: 600,
-    height: 300,
-  }));
 
   const currentUserInfo = (user) => {
     if (!user) {
@@ -107,55 +92,55 @@ const ProfileEdit = () => {
           <Box sx={{ width: 800, height: 250, padding: 8 }}>
             <Grid container spacing={2}>
               <Grid item xs={4}>
-                <Item>
-                  <Stack spacing={3}>
-                    <div className="avatar_frame">
-                      <div className="avatar_edit">
-                        <Avatar
-                          src={imageDisplay ? imageDisplay : avatar}
-                          sx={{ width: 150, height: 150 }}
-                        />
-                      </div>
-                      <div className="edit_button">
-                        <Fab
-                          variant="extended"
-                          size="small"
-                          color="primary"
-                          aria-label="upload picture"
-                          onClick={_handleClick}
-                        >
-                          <PhotoCamera />
-                        </Fab>
-                      </div>
+                <Stack spacing={3}>
+                  <div className="avatar_frame">
+                    <div className="avatar_edit">
+                      <Avatar
+                        src={imageDisplay ? imageDisplay : avatar}
+                        sx={{ width: 150, height: 150 }}
+                      />
                     </div>
-                    <div className="avatar_upload">
-                      <Button variant="contained" onClick={uploadImage}>
-                        upload image
-                      </Button>
+                    <div className="edit_button">
+                      <Fab
+                        variant="extended"
+                        size="small"
+                        color="primary"
+                        aria-label="upload picture"
+                        onClick={_handleClick}
+                      >
+                        <PhotoCamera />
+                      </Fab>
                     </div>
-                  </Stack>
-                </Item>
+                  </div>
+                  <div className="avatar_upload">
+                    <Button variant="contained" onClick={uploadImage}>
+                      upload image
+                    </Button>
+                  </div>
+                </Stack>
               </Grid>
               <Grid item xs={4}>
-                <Item>
-                  <Stack spacing={4}>
-                    <p>Name: </p>
+                <Stack spacing={4}>
+                  <p>Name: </p>
+                  <form onSubmit={handleFormSubmit}>
                     <input
+                      type="text"
+                      name="name"
                       required
+                      onChange={(e) => setUserName(e.target.value)}
+                      value={userName}
                       placeholder={user.displayName}
-                      onChange={handleChange}
                     />
-
-                    <p>
+                    <Button variant="contained" type="submit">
+                      update
+                    </Button>
+                  </form>
+                  {/* <p>
                       Email: {user.email} (
                       {user.emailVerified ? "verified" : "unverified"})
-                    </p>
-                    {/* <input placeholder={user.email} /> */}
-                    <Button variant="contained" sx={{}}>
-                      upload
-                    </Button>
-                  </Stack>
-                </Item>
+                    </p> */}
+                  {/* <input placeholder={user.email} /> */}
+                </Stack>
               </Grid>
             </Grid>
           </Box>
@@ -187,4 +172,5 @@ const ProfileEdit = () => {
     </div>
   );
 };
+
 export default ProfileEdit;
