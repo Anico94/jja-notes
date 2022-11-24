@@ -29,6 +29,7 @@ import {
   addDoc,
   updateDoc,
   orderBy,
+  doc,
   deleteDoc,
 } from "firebase/firestore";
 import firebase from "firebase/compat/app";
@@ -112,6 +113,32 @@ const Pages = (props) => {
     }
   };
 
+  const _deletePage = () => {
+    if (confirm("Are you sure you want to delete this page?")) {
+      const pageRef = doc(db, "pages", pageSelected);
+      deleteDoc(pageRef);
+      props.resetPage();
+    }
+  };
+
+  const showBinButton = (pageRef) => {
+    if (pageRef === pageSelected) {
+      return (
+        <div className="bin-button">
+          <IconButton
+            color="primary"
+            aria-label="delete"
+            component="label"
+            pageref={pageRef}
+            onClick={_deletePage}
+          >
+            <DeleteForeverIcon />
+          </IconButton>
+        </div>
+      );
+    }
+  };
+
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
@@ -138,7 +165,7 @@ const Pages = (props) => {
         pages.map((page) => {
           return (
             <div key={page.ref} className="page-line-items">
-              <div onClick={handleClickDiv}>
+              <div onClick={handleClickDiv} className="page-titles">
                 <ListItemButton
                   key={page.ref}
                   onClick={handleClick}
@@ -148,20 +175,7 @@ const Pages = (props) => {
                   <ListItemText primary={page.title} />
                 </ListItemButton>
               </div>
-              {/* <div
-                  className={
-                    page.ref === pageSelected ? "bin-button" : "bin-button hide"
-                  }
-                >
-                  <IconButton
-                    color="primary"
-                    aria-label="delete"
-                    component="label"
-                    pageref={page.ref}
-                  >
-                    <DeleteForeverIcon />
-                  </IconButton>
-                </div> */}
+              {showBinButton(page.ref)}
             </div>
           );
         })

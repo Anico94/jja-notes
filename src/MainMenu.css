@@ -2,12 +2,14 @@
   display: flex;
   justify-content: center;
 }
-.notebook-line-items {
+.notebook-line-items,
+.page-line-items {
   display: flex;
   justify-content: space-between;
 }
 
-.notebook-titles {
+.notebook-titles,
+.page-titles {
   flex-grow: 1;
 }
 
