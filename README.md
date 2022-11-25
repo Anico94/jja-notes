@@ -9,7 +9,7 @@ JJA notes is a simple and easy to use note taking app that allows users to store
 
 ## Collaborators
 
-[Josh Luo](https://github.com/MnRxi6f8JN),
+[Joshua Luo](https://github.com/MnRxi6f8JN),
 [Jiakai Ren](https://github.com/jiakairen) and
 [Alex Nicolaidis](https://github.com/Anico94)
 
@@ -18,10 +18,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Languages and Frameworks
 
 - Javascript, HTML, CSS/SCSS
-- Frontend build with React
-- Firebase Firestore used as the Database
-- Tiny MCE https://www.tiny.cloud/ (used for the rich text editor)
-- MUI Core used for styling https://mui.com/core/
+
+- [![React][react.js]][react-url]
+
+- [![Firebase][firebase.js]][firebase-url]
+
+- [![Tinymce][tinymce.js]][tinymce-url]
+
+- [![Mui][mui.js]][mui-url]
 
 ## Deployment
 
@@ -47,3 +51,12 @@ Application has been deployed with firebase and can be found at https://jja-note
 
 - Thank you to [Loden Gendun](https://github.com/Tenzang) for all the help and support to visit his github I have attached the link to his name.
 - Thank you to [The Blade](https://github.com/wofockham) to visit his github I have attached the link to his name.
+
+[react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[react-url]: https://reactjs.org/
+[firebase.js]: https://img.shields.io/badge/Firebase-20232A?style=for-the-badge&logo=firebase&logoColor=FFCB2C
+[firebase-url]: https://firebase.google.com/
+[mui.js]: https://img.shields.io/badge/MUI-20232A?style=for-the-badge&logo=MUI&logoColor=007FFF
+[mui-url]: https://mui.com
+[tinymce.js]: https://img.shields.io/badge/tinymce-20232A?style=for-the-badge&logo=tiny&logoColor=007FFF
+[tinymce-url]: https://www.tiny.cloud/
