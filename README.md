@@ -9,7 +9,7 @@ JJA notes is a simple and easy to use note taking app that allows users to store
 
 ## Collaborators
 
-[Joshua Luo](https://github.com/MnRxi6f8JN),
+[Joshua Luo](https://github.com/Joshuanluo),
 [Jiakai Ren](https://github.com/jiakairen) and
 [Alex Nicolaidis](https://github.com/Anico94)
 
